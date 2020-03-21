@@ -20,6 +20,6 @@ point_t *create_particle(descriptor_t *desc)
     part->life = 0;
     part->color = desc->color[0];
     part->pos = desc->org[0];
-    part->vel = (sfVector2f){100, 100};
+    part->vel = (sfVector2f){desc->speed[0], desc->speed[0]};
     return (part);
 }

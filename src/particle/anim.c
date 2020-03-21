@@ -5,6 +5,8 @@
 ** particle engine animation
 */
 
+#include <math.h>
+
 #include "particle.h"
 
 void animate_particle(point_t *particle, double delta)
@@ -14,7 +16,30 @@ void animate_particle(point_t *particle, double delta)
     particle->life += delta;
 }
 
-void animate_system(syst_t *system, double delta)
+void draw_point(framebuffer_t *fb, point_t *pt, descriptor_t *desc)
+{
+    sfColor color = desc->color[0];
+    int size = desc->size[0];
+    double ratio = 0;
+    int dx = 0;
+    int dy = 0;
+
+    if (!pt || !fb)
+        return;
+    for (int i = pt->pos.x - size / 2; i < pt->pos.x + size / 2; i++){
+        for (int j = pt->pos.y - size / 2; j < pt->pos.y + size / 2; j++){
+            dx = i - (int) pt->pos.x;
+            dy = j - (int) pt->pos.y;
+            ratio = (size - 2 * sqrt(dx * dx + dy * dy)) / size;
+            if (ratio <= 0.0f)
+                continue;
+            color.a = 255 * ratio;
+            set_pixel(fb, pt->pos.x + i, pt->pos.y + j, color);
+        }
+    }
+}
+
+void animate_system(framebuffer_t *fb, syst_t *system, double delta)
 {
     descriptor_t *desc = system->desc;
 
@@ -23,8 +48,10 @@ void animate_system(syst_t *system, double delta)
         system->timer = desc->lifetime / desc->qty;
     }
     system->timer -= delta;
-    for (point_t *pt = system->pt_head; pt != 0; pt = pt->next)
+    for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         animate_particle(pt, delta);
+        draw_point(fb, pt, desc);
+    }
     for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         if (pt->life > desc->lifetime){
             delete_particle(system, pt);
@@ -37,9 +64,6 @@ void animate_engine(part_t *engine, double delta)
 {
     clear_fb(engine->fb);
     for (int i = 0; engine->systems[i] != 0; i++)
-        animate_system(engine->systems[i], delta);
-    for (int i = 0; engine->systems[i] != 0; i++)
-        for (point_t *pt = engine->systems[i]->pt_head; pt != 0; pt = pt->next)
-            set_pixel(engine->fb, pt->pos.x, pt->pos.y, sfYellow);
+        animate_system(engine->fb, engine->systems[i], delta);
     update_engine(engine);
 }

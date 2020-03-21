@@ -24,6 +24,8 @@ void desc_set_region_square(descriptor_t *desc, sfIntRect rect, char dir)
     free(desc->dir);
     desc->dir = 0;
     desc->org = malloc(sizeof(sfVector2f) * (pt_nb + 1));
+    if (!desc->org)
+        return;
     desc->org[pt_nb] = (sfVector2f) {-1, -1};
     for (int i = 0; i < pt_nb; i ++)
         desc->org[i] = (sfVector2f) {rect.top + pt_dx * i,

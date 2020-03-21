@@ -22,13 +22,13 @@ descriptor_t *create_descriptor(void)
     desc->speed = 0;
     desc->lifetime = 5;
     desc->duration = -1;
-    desc->qty = 20;
+    desc->qty = 5;
     desc->flags = 0;
     desc->dir = 0;
     desc->org = 0;
     desc->id = 0;
     desc_append_color(desc, sfWhite);
-    desc_append_size(desc, 2);
+    desc_append_size(desc, 10);
     desc_append_speed(desc, 1);
     return (desc);
 }

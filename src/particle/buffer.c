@@ -13,6 +13,8 @@ void set_pixel(framebuffer_t *fb, int x, int y, sfColor color)
 {
     int pos = (x + fb->width * y) * 4;
 
+    if (x < 0 || y < 0 || x >= fb->width || y >= fb->height)
+        return;
     fb->pixels[pos + 0] = color.r;
     fb->pixels[pos + 1] = color.g;
     fb->pixels[pos + 2] = color.b;

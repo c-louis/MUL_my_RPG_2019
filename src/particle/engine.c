@@ -20,7 +20,7 @@ part_t *create_engine(sfVideoMode mode)
     engine->fb_tex = sfTexture_create(mode.width, mode.height);
     engine->res = sfSprite_create();
     engine->systems = malloc(sizeof(syst_t *));
-    if (!engine->systems)
+    if (!engine->systems || !engine->fb || !engine->fb_tex || !engine->res)
         return (0);
     engine->systems[0] = 0;
     sfTexture_updateFromPixels(engine->fb_tex, engine->fb->pixels,
