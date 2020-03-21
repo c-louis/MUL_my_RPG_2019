@@ -10,28 +10,6 @@
 #include "particle.h"
 #include "my.h"
 
-void set_pixel(framebuffer_t *fb, int x, int y, sfColor color)
-{
-    int pos = (x + fb->width * y) * 4;
-
-    fb->pixels[pos + 0] = color.r;
-    fb->pixels[pos + 1] = color.g;
-    fb->pixels[pos + 2] = color.b;
-    fb->pixels[pos + 3] = color.a;
-}
-
-framebuffer_t *create_framebuffer(sfVideoMode mode)
-{
-    framebuffer_t *fb = malloc(sizeof(framebuffer_t));
-
-    if (!fb)
-        return (0);
-    fb->pixels = malloc(sizeof(char) * (mode.width * mode.height * 4));
-    fb->width = mode.width;
-    fb->height = mode.height;
-    return (fb);
-}
-
 part_t *create_engine(sfVideoMode mode)
 {
     part_t *engine = malloc(sizeof(part_t));

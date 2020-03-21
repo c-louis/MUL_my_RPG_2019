@@ -36,7 +36,6 @@ typedef struct desc {
     sfVector2f *dir;
     sfVector2f *org;
     char id;
-    double timer;
 } descriptor_t;
 
 typedef struct pt {
@@ -51,6 +50,7 @@ typedef struct pt {
 typedef struct sys {
     descriptor_t *desc;
     point_t *pt_head;
+    double timer;
 } syst_t;
 
 typedef struct par {
@@ -63,6 +63,7 @@ typedef struct par {
 part_t *create_engine(sfVideoMode mode);
 descriptor_t *create_descriptor(void);
 syst_t *create_system(void);
+point_t *create_particle(descriptor_t *desc);
 
 void append_particle(syst_t *system, point_t *particle);
 void delete_particle(syst_t *system, point_t *particle);
@@ -75,6 +76,11 @@ void desc_append_size(descriptor_t *desc, int n_size);
 void desc_append_speed(descriptor_t *desc, double n_speed);
 
 void desc_set_region_square(descriptor_t *desc, sfIntRect rect, char dir);
+
+void set_pixel(framebuffer_t *fb, int x, int y, sfColor color);
+void clear_fb(framebuffer_t *fb);
+void update_engine(part_t *engine);
+framebuffer_t *create_framebuffer(sfVideoMode mode);
 
 void animate_engine(part_t *engine, double delta);
 

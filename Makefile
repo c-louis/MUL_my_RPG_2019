@@ -5,11 +5,18 @@
 ## Makefile
 ##
 
-SRC	=	src/main.c	\
-		src/event.c	\
-		src/loop.c	\
-		src/init.c	\
-		src/clean.c
+SRC	=	src/main.c			\
+		src/event.c			\
+		src/loop.c			\
+		src/init.c			\
+		src/clean.c			\
+		src/particle/engine.c		\
+		src/particle/anim.c		\
+		src/particle/system.c		\
+		src/particle/part.c		\
+		src/particle/buffer.c		\
+		src/particle/desc/desc.c	\
+		src/particle/desc/move.c
 
 OBJ	=	$(SRC:.c=.o)
 

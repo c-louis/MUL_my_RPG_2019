@@ -10,7 +10,7 @@
 void main_loop(sfRenderWindow *window, globals_t *gl)
 {
     sfTime time = sfClock_restart(gl->clock);
-    double delta = sfTime_asMilliseconds(time) / 16000;
+    double delta = (double) sfTime_asMilliseconds(time) / 1000;
 
     animate_engine(gl->engine, delta);
     sfRenderWindow_clear(window, sfBlack);

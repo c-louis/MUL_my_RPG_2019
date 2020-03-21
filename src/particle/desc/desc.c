@@ -27,7 +27,9 @@ descriptor_t *create_descriptor(void)
     desc->dir = 0;
     desc->org = 0;
     desc->id = 0;
-    desc->timer = 0;
+    desc_append_color(desc, sfWhite);
+    desc_append_size(desc, 2);
+    desc_append_speed(desc, 1);
     return (desc);
 }
 
