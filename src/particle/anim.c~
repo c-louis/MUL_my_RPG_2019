@@ -1,0 +1,12 @@
+/*
+** EPITECH PROJECT, 2020
+** my_rpg
+** File description:
+** particle engine animation
+*/
+
+#include "particle.h"
+
+void animate_engine(part_t *engine, double delta)
+{
+}
