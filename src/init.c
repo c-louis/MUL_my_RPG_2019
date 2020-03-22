@@ -12,6 +12,7 @@ void init_particle_demo(part_t *engine)
     syst_t *system1 = create_system();
     syst_t *system2 = create_system();
     syst_t *system3 = create_system();
+    syst_t *bug = create_system();
 
     system1->desc->size[0] = 30;
     system1->desc->color[0] = sfYellow;
@@ -34,9 +35,13 @@ void init_particle_demo(part_t *engine)
     system3->desc->lifetime = 5;
     system3->desc->org[0] = (sfVector2f) {200, 0};
 
+    bug->desc->size[0] = 100;
+    bug->desc->speed[0] = 10;
+    bug->desc->org[0] = (sfVector2f) {600, 0};
     append_system(engine, system1);
     append_system(engine, system2);
     append_system(engine, system3);
+    append_system(engine, bug);
 }
 
 void init_globals(globals_t *gl)

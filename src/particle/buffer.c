@@ -12,13 +12,24 @@
 void set_pixel(framebuffer_t *fb, int x, int y, sfColor color)
 {
     int pos = (x + fb->width * y) * 4;
+    double ratio;
 
     if (x < 0 || y < 0 || x >= fb->width || y >= fb->height)
         return;
-    fb->pixels[pos + 0] = color.r;
-    fb->pixels[pos + 1] = color.g;
-    fb->pixels[pos + 2] = color.b;
-    fb->pixels[pos + 3] = color.a;
+    if (color.a != 255){
+        ratio = (double) color.a / 255;
+        fb->pixels[pos + 0] *= (1 - ratio);
+        fb->pixels[pos + 1] *= (1 - ratio);
+        fb->pixels[pos + 2] *= (1 - ratio);
+        fb->pixels[pos + 0] += (ratio) * color.r;
+        fb->pixels[pos + 1] += (ratio) * color.g;
+        fb->pixels[pos + 2] += (ratio) * color.b;
+    }else{
+        fb->pixels[pos + 0] = color.r;
+        fb->pixels[pos + 1] = color.g;
+        fb->pixels[pos + 2] = color.b;
+    }
+    fb->pixels[pos + 3] = 255;
 }
 
 void clear_fb(framebuffer_t *fb)

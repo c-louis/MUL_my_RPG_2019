@@ -19,7 +19,7 @@
 #define vert(x) (x == DIR_UP || x == DIR_DOWN)
 
 typedef struct fb {
-    char *pixels;
+    unsigned char *pixels;
     int width;
     int height;
 } framebuffer_t;

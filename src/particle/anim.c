@@ -21,15 +21,15 @@ void draw_point(framebuffer_t *fb, point_t *pt, descriptor_t *desc)
     sfColor color = desc->color[0];
     int size = desc->size[0];
     double ratio = 0;
-    int dx = 0;
-    int dy = 0;
+    double dx = 0;
+    double dy = 0;
 
     if (!pt || !fb)
         return;
-    for (int i = pt->pos.x - size / 2; i < pt->pos.x + size / 2; i++){
-        for (int j = pt->pos.y - size / 2; j < pt->pos.y + size / 2; j++){
-            dx = i - (int) pt->pos.x;
-            dy = j - (int) pt->pos.y;
+    for (double i = pt->pos.x - size / 2; i < pt->pos.x + size / 2; i++){
+        for (double j = pt->pos.y - size / 2; j < pt->pos.y + size / 2; j++){
+            dx = i - (double) pt->pos.x;
+            dy = j - (double) pt->pos.y;
             ratio = (size - 2 * sqrt(dx * dx + dy * dy)) / size;
             if (ratio <= 0.0f)
                 continue;
