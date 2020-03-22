@@ -30,6 +30,7 @@ descriptor_t *create_descriptor(void)
     desc_append_color(desc, sfWhite);
     desc_append_size(desc, 10);
     desc_append_speed(desc, 1);
+    desc_set_region_square(desc, (sfIntRect) {0, 0, 100, 0}, DIR_DOWN);
     return (desc);
 }
 

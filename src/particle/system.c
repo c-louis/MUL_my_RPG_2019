@@ -13,11 +13,9 @@ syst_t *create_system(void)
 {
     syst_t *system = malloc(sizeof(syst_t));
     descriptor_t *desc = create_descriptor();
-    sfIntRect def = {0, 0, 100, 100};
 
     if (!system || !desc)
         return (0);
-    desc_set_region_square(desc, def, DIR_DOWN);
     system->desc = desc;
     system->pt_head = 0;
     system->timer = 0;

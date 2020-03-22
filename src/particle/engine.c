@@ -33,9 +33,10 @@ void append_system(part_t *engine, syst_t *system)
 {
     int sys_len = 0;
 
-    if (!engine || !system || !engine->systems)
+    if (!engine || !system)
         return;
-    for (; engine->systems[sys_len] != 0; sys_len++);
+    if (engine->systems)
+        for (; engine->systems[sys_len] != 0; sys_len++);
     engine->systems = my_realloc(engine->systems,
         sizeof(syst_t *) * (sys_len + 1), sizeof(syst_t *) * (sys_len + 2));
     engine->systems[sys_len] = system;

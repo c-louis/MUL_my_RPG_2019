@@ -11,10 +11,11 @@
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
 
-#define DIR_DOWN  (0 >> 0)
-#define DIR_UP    (1 >> 0)
-#define DIR_LEFT  (1 >> 1)
-#define DIR_RIGHT (1 >> 1 || 1 >> 0)
+#define DIR_DOWN   (0 << 0)
+#define DIR_UP     (1 << 0)
+#define DIR_LEFT   (1 << 1)
+#define DIR_RIGHT  (1 << 1 | 1 << 0)
+#define DIR_RANDOM (1 << 3)
 
 #define vert(x) (x == DIR_UP || x == DIR_DOWN)
 
@@ -33,8 +34,11 @@ typedef struct desc {
     double duration;
     int qty;
     char flags;
+    sfIntRect reg_rect;
     sfVector2f *dir;
     sfVector2f *org;
+    int dir_size;
+    int org_size;
     char id;
 } descriptor_t;
 
