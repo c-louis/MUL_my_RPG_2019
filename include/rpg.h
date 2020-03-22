@@ -21,6 +21,7 @@ typedef struct gl {
     sfVideoMode mode;
     sfClock *clock;
     part_t *engine;
+    double test;
 } globals_t;
 
 void clean_memory(globals_t *gl);

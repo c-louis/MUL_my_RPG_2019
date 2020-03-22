@@ -48,7 +48,6 @@ void part_vel_rand(point_t *part, descriptor_t *desc)
 
     part->vel.x = cos(gen) * desc->speed[0];
     part->vel.y = sin(gen) * desc->speed[0];
-    //printf("%f, %f, %f\n", gen, part->pos.x, part->pos.y);
 }
 
 point_t *create_particle(descriptor_t *desc)
