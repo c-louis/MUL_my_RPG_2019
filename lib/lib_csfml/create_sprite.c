@@ -19,6 +19,7 @@ int init_sprite_texture(sprite_t *sprite, char *pathname)
 void init_vector(sprite_t *sprite, float x, float y)
 {
     sfVector2f base_vect = {x, y};
+
     sprite->vect = base_vect;
 }
 

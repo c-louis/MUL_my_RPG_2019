@@ -37,4 +37,14 @@ int init_sprite_texture(sprite_t *sprite, char *pathname);
 void init_vector(sprite_t *sprite, float x, float y);
 
 
+// [Button Function]
+
+int init_button_data(button_t *button, const init_but_t *but_data);
+void init_button_rect(button_t *button, const init_but_t *but_data);
+int init_button(button_t *button, const init_but_t *but_data);
+
+// [Text Function]
+
+
+
 #endif /* !LIB_CSFML_H_ */

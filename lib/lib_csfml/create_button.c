@@ -34,9 +34,8 @@ int init_button(button_t *button, const init_but_t *but_data)
     const init_sprite_t sprite_data =
     {but_data->path, but_data->x_coor, but_data->y_coor};
 
-    if (init_sprite(&button->b_sprite, &sprite_data) == 84)
-        return (84);
-  
+    if (init_sprite(&button->b_sprite, &sprite_data) == EXIT_FAILURE)
+        return (EXIT_FAILURE);
     init_button_data(button, but_data);
-    return (0);
+    return (EXIT_SUCCESS);
 }

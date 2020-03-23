@@ -15,6 +15,12 @@
 
 // Static Non-Build Struct
 
+typedef struct s_text {
+    sfText *text;
+    sfFont *font;
+    sfVector2f pos;
+}text_t;
+
 typedef struct s_sprite
 {
     char *pathname;
@@ -37,6 +43,18 @@ typedef struct s_button
 
 
 // Static Pre-Build Struct
+
+typedef struct s_init_text
+{
+    char *text;
+    char *font;
+    int size;
+    int x_coor;
+    int y_coor;
+    int red_c;
+    int green_c;
+    int blue_c;
+}init_text_t;
 
 typedef struct s_init_sprite
 {
