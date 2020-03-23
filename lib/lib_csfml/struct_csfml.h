@@ -59,9 +59,11 @@ typedef struct s_scene
     int nb_sprite;
     int nb_button;
     int nb_text;
+    int nb_sound;
     sprite_t *sprite;
     button_t *button;
     text_t *text;
+    sound_t *sound;
     sfEvent event;
 }scene_t;
 
