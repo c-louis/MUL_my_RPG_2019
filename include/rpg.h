@@ -8,20 +8,15 @@
 #ifndef _RPG_H
 #define _RPG_H
 
+#define USAGE ""                                \
+    "./my_rpg\n"
+
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
 
-#define USAGE ""                                \
-    "./my_rpg\n"
-
-#include "particle.h"
-
 typedef struct gl {
     sfVideoMode mode;
-    sfClock *clock;
-    part_t *engine;
-    double test;
 } globals_t;
 
 void clean_memory(globals_t *gl);
