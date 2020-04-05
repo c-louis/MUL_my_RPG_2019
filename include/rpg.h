@@ -17,6 +17,11 @@
 
 typedef struct gl {
     sfVideoMode mode;
+    sfTexture *tex;
+    sfSprite *sprite;
+    sfShader *shader;
+    sfRenderStates *state;
+    sfClock *clock;
 } globals_t;
 
 void clean_memory(globals_t *gl);
