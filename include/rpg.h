@@ -15,6 +15,8 @@
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
 
+#include "engine.h"
+
 typedef struct gl {
     sfVideoMode mode;
     sfTexture *tex;
@@ -22,6 +24,7 @@ typedef struct gl {
     sfShader *shader;
     sfRenderStates *state;
     sfClock *clock;
+    room_t **rooms;
 } globals_t;
 
 void clean_memory(globals_t *gl);

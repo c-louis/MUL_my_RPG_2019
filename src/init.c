@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "rpg.h"
+#include "engine.h"
 
 void init_globals(globals_t *gl)
 {
@@ -25,4 +26,9 @@ void init_globals(globals_t *gl)
     gl->clock = sfClock_create();
     sfShader_setFloat2Parameter(gl->shader, "u_resolution",
         gl->mode.width, gl->mode.height);
+    gl->rooms = get_rooms("assets/map.dat");
+    if (!gl->rooms) {
+        printf("Error in getrooms !\n");
+        exit(84);
+    }
 }

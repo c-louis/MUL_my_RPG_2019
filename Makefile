@@ -9,7 +9,11 @@ SRC	=	src/main.c	\
 		src/event.c	\
 		src/loop.c	\
 		src/init.c	\
-		src/clean.c
+		src/clean.c	\
+		src/map/map_read.c	\
+		src/map/light.c		\
+		src/map/room.c		\
+		src/map/wall.c		\
 
 OBJ	=	$(SRC:.c=.o)
 
