@@ -19,7 +19,7 @@
 
 typedef struct gl {
     sfVideoMode mode;
-    sfTexture *tex;
+    sfRenderTexture *tex;
     sfSprite *sprite;
     sfShader *shader;
     sfRenderStates *state;

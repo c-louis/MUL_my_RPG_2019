@@ -26,13 +26,15 @@ entity_type = {
 
 rooms = [
     [
-        1920, 1080, colors["white"],
+        1000, 1000, colors["white"],
         [
-            [types["object"], [1, 1], [119, 1], [119, 100], [1, 100]],
-            [types["object"], [200, 200], [200, 400], [100, 400]],
-            [types["object"], [800, 200], [800, 400], [700, 400]]
-            #[types["object"], [1, 1], [100, 1], [100, 179], [1, 179]],
-            #[types["entity"], entity_type["START_POSITION"], [0, 0]]
+            [types["object"], [1, 1], [100, 1], [100, 100], [1, 100]],
+#            [types["light"], 100, light_status["on"], [200, 200]],
+#            [types["entity"], entity_type["START_POSITION"], [12, 12]],
+#            [types["entity"], entity_type["NPC"], [42, 23]],
+#            [types["light"], 100, light_status["off"], [1234, 4321]],
+            [types["object"], [12, 1], [1005, 1], [1040, 1100], [1, 1100]],
+            [types["object"], [1, 14], [1010, 1], [1300, 1010], [1, 1004]]
         ]
     ]
 ]
@@ -43,8 +45,8 @@ def write_map(data):
     f.close()
 
 def append_short(res, data):
-    if data > 65536:
-        print("Trying too write big value ! (%d)" % data)
+    if data > 65535:
+        print("Trying to write too big value ! (%d)" % data)
     res.append((data >> 8) & 0xFF)
     res.append(data & 0xFF)
 
