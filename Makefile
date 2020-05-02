@@ -29,6 +29,8 @@ SRC	=	src/main.c	\
 		src/entity/math_utils.c		\
 		src/entity/movement.c		\
 		src/entity/copy.c			\
+		src/rooms/getter.c			\
+		src/rooms/debugger.c		\
 
 OBJ	=	$(SRC:.c=.o)
 

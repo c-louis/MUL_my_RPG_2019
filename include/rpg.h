@@ -44,7 +44,7 @@ int init_player(globals_t *room);
 
 //Player movement function
 void mouse_move_event(sfEvent *event, entity_t *player, globals_t *gl, sfRenderWindow *window);
-void move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl);
+int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl);
 int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
 
 #endif

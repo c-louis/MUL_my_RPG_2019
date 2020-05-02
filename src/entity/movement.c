@@ -27,7 +27,7 @@ sfVector2f get_newposition(sfVector2f from, sfVector2f to, float speed)
     return (from);
 }
 
-void move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
+int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
 {
     sfVector2f from = entity->pos;
     sfVector2f next_position = get_newposition(from, to, speed);
@@ -42,7 +42,8 @@ void move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
         for (int y = 0; entity->body && entity->body[y]; y++) {
             sfConvexShape_setPosition(entity->body[y], entity->pos);
         }
-        return;
+        return (1);
     }
     entity->pos = next_position;
+    return (0);
 }

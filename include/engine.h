@@ -117,4 +117,8 @@ int is_newpos_colliding_walls(sfConvexShape *shape, sfConvexShape **w);
 char *read_file(char *path);
 int get_filesize(char *path);
 
+// Room Getter
+info_t *get_room_start(room_t *room);
+info_t *get_room_end(room_t *room);
+
 #endif
