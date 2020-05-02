@@ -26,6 +26,8 @@ typedef struct gl {
     sfClock *clock;
     room_t **rooms;
     entity_t *player;
+    sfView *main_view;
+    sfView *hud_view;
     int room_index;
 } globals_t;
 
@@ -41,7 +43,7 @@ void main_loop(sfRenderWindow *window, globals_t *gl);
 int init_player(globals_t *room);
 
 //Player movement function
-void mouse_move_event(sfEvent *event, entity_t *player, globals_t *gl);
+void mouse_move_event(sfEvent *event, entity_t *player, globals_t *gl, sfRenderWindow *window);
 void move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl);
 int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
 

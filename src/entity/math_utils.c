@@ -45,7 +45,7 @@ int is_colliding(sfConvexShape *shape, sfVector2f point)
 {
     int pc = sfConvexShape_getPointCount(shape);
     int side = -1;
-    int next_side = 0;
+    float next_side = 0;
     sfVector2f shape_point1;
     sfVector2f shape_point2;
     sfTransform trans = sfConvexShape_getTransform(shape);
@@ -53,13 +53,13 @@ int is_colliding(sfConvexShape *shape, sfVector2f point)
     for (int i = 0; i < pc; i++) {
         shape_point1 = sfConvexShape_getPoint(shape, i);
         shape_point1 = sfTransform_transformPoint(&trans, shape_point1);
-        shape_point2 = sfConvexShape_getPoint(shape, i + 1);
+        shape_point2 = i + 1 == pc ?  sfConvexShape_getPoint(shape, 0)
+            : sfConvexShape_getPoint(shape, i + 1);
         shape_point2 = sfTransform_transformPoint(&trans, shape_point2);
         next_side = get_orientation(shape_point1, shape_point2, point);
-        next_side = next_side < 0 ? 0 : 1;
         if (side == -1)
-            side = next_side;
-        if (next_side != side)
+            side = next_side < 0 ? 0 : 1;
+        if ((next_side < 0 ? 0 : 1) != side)
             return (0);
     }
     return (1);
@@ -71,7 +71,7 @@ int are_shape_colliding(sfConvexShape *shape1, sfConvexShape *shape2)
     sfVector2f point;
     sfTransform trans = sfConvexShape_getTransform(shape2);
 
-    for (int i = 0; i < pc + 1; i++) {
+    for (int i = 0; i < pc; i++) {
         point = sfConvexShape_getPoint(shape2, i);
         point = sfTransform_transformPoint(&trans, point);
         if (is_colliding(shape1, point))
