@@ -18,10 +18,16 @@ int get_point_counts(room_t *room)
     return (count + 4);
 }
 
-int check_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to,
+int chk_dist(sfVector2f from, sfVector2f new, sfVector2f old)
+{
+    return (get_distance(from, new) < get_distance(from, old));
+}
+
+int check_raycast(sfVector2f *buf, sfFloatRect rect, int *written,
     sfConvexShape *shape)
 {
     int points = sfConvexShape_getPointCount(shape);
+    sfVector2f from = {rect.left, rect.top};
     sfVector2f f_p;
     sfVector2f t_p;
     sfVector2f res;
@@ -29,9 +35,11 @@ int check_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to,
     for (int i = 0; i < points - 1; i++){
         f_p = sfConvexShape_getPoint(shape, i);
         t_p = sfConvexShape_getPoint(shape, i + 1);
-        res = get_inter(from, to, f_p, t_p);
-        if (res.x != -1 && res.y != -1){
+        res = get_inter(from, (sfVector2f) {rect.width, rect.height}, f_p, t_p);
+        if (res.x != -1 && res.y != -1 &&
+            (!*written || chk_dist(from, res, *buf))){
             *buf = res;
+            *written = 1;
             return (1);
         }
     }

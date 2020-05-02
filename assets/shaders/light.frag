@@ -13,7 +13,7 @@ void main()
     for (int i = 0; i < u_lights_count; i++){
         vec2 l = vec2(u_lights[i].x, u_resolution.y - u_lights[i].y);
         vec2 pos = (gl_FragCoord.xy - l) / min(u_resolution.x, u_resolution.y);
-        future += u_lights[i].z * 0.000003 / length(pos);
+        future += u_lights[i].z * 0.000001 / length(pos);
     }
 
     gl_FragColor = vec4(vec3(future), 1.0);

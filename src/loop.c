@@ -47,7 +47,7 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     sfInt32 i_time = sfTime_asMicroseconds(time);
     float f_time = ((float) i_time) / 100;
 
-    update_light_position(window, gl);
+    //update_light_position(window, gl);
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_setView(window, gl->main_view);
