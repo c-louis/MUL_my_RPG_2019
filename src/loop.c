@@ -33,10 +33,9 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_setView(window, gl->main_view);
-    draw_background(window, gl);
     draw_lights(window, gl);
+    draw_hud(window, gl);
     draw_entity(window, gl->player);
     sfRenderWindow_setView(window, gl->hud_view);
-    draw_hud(window, gl);
     sfRenderWindow_display(window);
 }

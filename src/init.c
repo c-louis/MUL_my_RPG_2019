@@ -65,6 +65,23 @@ void init_engine(globals_t *gl)
     }
 }
 
+void init_lights_at_room(globals_t *gl, int index)
+{
+    int lights_count = 0;
+    sfGlslVec3 *lights = 0;
+
+    while (gl->rooms[index]->lights[lights_count] != 0)
+        lights_count++;
+    if (!(lights = malloc(sizeof(sfGlslVec3) * lights_count)))
+        return;
+    for (int i = 0; i < lights_count; i++)
+        lights[i] = (sfGlslVec3) {gl->rooms[index]->lights[i]->position.x, gl->rooms[index]->lights[i]->position.y, gl->rooms[index]->lights[i]->radius};
+    sfShader_setVec3UniformArray(gl->shader, "u_lights", lights, lights_count);
+    sfShader_setIntUniform(gl->shader, "u_lights_count", lights_count);
+    gl->light_polys = alloc_polygones(gl->rooms[index]);
+    update_lights(gl->light_polys, gl);
+}
+
 void init_globals(globals_t *gl)
 {
     gl->mode = (sfVideoMode) {1920, 1080, 32};
@@ -74,7 +91,7 @@ void init_globals(globals_t *gl)
     //sfSprite_setTexture(gl->sprite, sfRenderTexture_getTexture(gl->tex), sfTrue);
     //sfSprite_setScale(gl->sprite, (sfVector2f) {1, -1});
     //sfSprite_setPosition(gl->sprite, (sfVector2f) {0, gl->mode.height});
-    gl->shader = sfShader_createFromFile("assets/shaders/vert_shader.vert", 0,
+    gl->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
         "assets/shaders/light.frag");
     gl->state = malloc(sizeof(sfRenderStates));
     gl->state->blendMode = sfBlendAlpha;
@@ -85,14 +102,12 @@ void init_globals(globals_t *gl)
     sfShader_setVec2Uniform(gl->shader, "u_resolution",
         (sfGlslVec2) {gl->mode.width, gl->mode.height});
     //sfShader_setTextureUniform(gl->shader, "u_screen", sfRenderTexture_getTexture(gl->tex));
-    gl->tex = sfRenderTexture_create(gl->mode.width, gl->mode.height, sfFalse);
-    gl->sprite = sfSprite_create();
     gl->clock = sfClock_create();
     gl->main_view = sfView_create();
     gl->hud_view = sfView_create();
     sfView_setSize(gl->main_view, (sfVector2f) {1920, 1080});
     sfView_setSize(gl->hud_view, (sfVector2f) {1920, 1080});
     init_engine(gl);
-    update_lights(gl->light_polys, gl);
+    init_lights_at_room(gl, 0);
     sfView_setCenter(gl->main_view, gl->player->pos);
 }
