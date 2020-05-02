@@ -37,12 +37,8 @@ int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl)
     switch(event->key.code) {
         case sfKeyZ:
             return (move_entity(p, mouse, s, gl));
-        case sfKeyQ:
-            return (move_entity(p, (sfVector2f) {-mouse.x, mouse.y}, s, gl));
-        case sfKeyS:
-            return (move_entity(p, (sfVector2f) {-mouse.x, -mouse.y}, s, gl));
-        case sfKeyD:
-            return (move_entity(p, (sfVector2f) {mouse.x, -mouse.y}, s, gl));
+        default:
+            return (0);
     }
     return (0);
 }

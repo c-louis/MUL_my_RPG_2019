@@ -31,6 +31,7 @@ SRC	=	src/main.c	\
 		src/enemies/static_read.c	\
 		src/player/movement.c		\
 		src/player/rotation.c		\
+		src/player/end_room.c		\
 		src/entity/draw.c			\
 		src/entity/math_utils.c		\
 		src/entity/movement.c		\

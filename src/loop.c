@@ -55,5 +55,9 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     draw_hud(window, gl);
     draw_entity(window, gl->player);
     sfRenderWindow_setView(window, gl->hud_view);
+    if (is_on_end(gl)) {
+        printf("Drawing text !\n");
+        sfRenderWindow_drawText(window, gl->end_room, 0);
+    }
     sfRenderWindow_display(window);
 }

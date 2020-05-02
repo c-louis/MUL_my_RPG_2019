@@ -20,17 +20,18 @@ int add_entity(dfile_t *a_data, room_t *room, int *i)
 
 int data_wall_light(dfile_t *data, int *i, room_t ***rooms, int *index_room)
 {
+    printf("index_room : %d\n", *index_room - 1);
     if (data->data[*i] == 'W')
-        *i += add_wall(data, *rooms[*index_room - 1], i);
+        *i += add_wall(data, (*rooms)[*index_room - 1], i);
     else
-        *i += add_light(data, *rooms[*index_room - 1], i);
+        *i += add_light(data, (*rooms)[*index_room - 1], i);
     return (0);
 }
 
 int data_entity_room(dfile_t *data, int *i, room_t ***rooms, int *index_room)
 {
     if (data->data[*i] == 'E')
-        *i += add_entity(data, *rooms[*index_room - 1], i);
+        *i += add_entity(data, (*rooms)[*index_room - 1], i);
     else {
         if (add_room(rooms, index_room, data, i))
             return (1);
@@ -52,7 +53,7 @@ int data_switch(dfile_t *data, int *i, room_t ***rooms, int *index_room)
                 return (1);
             break;
         case 'I':
-            *i += add_info(data, *rooms[*index_room - 1], i);
+            *i += add_info(data, (*rooms)[*index_room - 1], i);
             break;
         default:
             return (1);

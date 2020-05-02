@@ -49,8 +49,9 @@ int add_room(room_t ***rooms, int *size, dfile_t *data, int *i)
         return (1);
     }
     set_newrooms_data(new_rooms[*size], data, i);
+    printf("Just init room : %d\n", *size);
     *size += 1;
-    *rooms = new_rooms;
     free(old_rooms);
+    *rooms = new_rooms;
     return (0);
 }

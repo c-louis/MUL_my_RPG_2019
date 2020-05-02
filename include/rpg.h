@@ -30,6 +30,7 @@ typedef struct gl {
     sfView *main_view;
     sfView *hud_view;
     sfGlslVec3  *light_shader_obj;
+    sfText *end_room;
     int room_index;
 } globals_t;
 

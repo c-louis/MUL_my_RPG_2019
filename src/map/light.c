@@ -57,9 +57,9 @@ int add_light(dfile_t *a_data, room_t *room, int *i)
     radius |= data[1];
     st = data[2];
     posi[0] = data[3] << 8;
-    posi[0] != data[4];
+    posi[0] |= data[4];
     posi[1] = data[5] << 8;
-    posi[1] = data[6];
+    posi[1] |= data[6];
     pos = (sfVector2f) {(float) posi[0], (float) posi[1]};
     if (add_light_to_room(room, pos, radius, st))
         return (-(a_data->data_size));
