@@ -49,18 +49,18 @@ int add_info(dfile_t *a_data, room_t *room, int *i)
     short pos[2];
     char type;
     char id;
-    sfVector2f posi;
+    sfVector2f posi = (sfVector2f) {0, 0};
 
     data = data + *i;
     if (a_data->data_size < *i + 5)
         return (-(a_data->data_size));
-    type = data[0];
-    pos[0] = data[1] << 8;
-    pos[0] != data[2];
-    pos[1] = data[3] << 8;
-    pos[1] = data[4];
+    type = data[1];
+    pos[0] = data[2] << 8;
+    pos[0] |= data[3];
+    pos[1] = data[4] << 8;
+    pos[1] |= data[5];
     if (a_data->data_size < *i + 6 && type == 2)
-        id = data[5];
+        id = data[6];
     posi = (sfVector2f) {(float) pos[0], (float) pos[1]};
     if (add_info_to_room(room, type, posi, id))
         return (-(a_data->data_size));

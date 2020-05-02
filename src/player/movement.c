@@ -8,7 +8,6 @@
 #include <stdlib.h>
 
 #include "rpg.h"
-#include "engine.h"
 
 int is_newpos_colliding_walls(sfConvexShape *shape, sfConvexShape **w) {
     for (int i = 0; w[i]; i++) {
@@ -33,19 +32,17 @@ int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl)
     sfVector2i mouse_i = sfMouse_getPositionRenderWindow(window);
     sfVector2f mouse =
         sfRenderWindow_mapPixelToCoords(window, mouse_i, gl->main_view);
-    int speed = 5 + (event->key.shift == sfTrue ? 10 : 0);
+    int s = 5 + (event->key.shift == sfTrue ? 10 : 0);
+
     switch(event->key.code) {
         case sfKeyZ:
-            move_entity(p, mouse, speed, gl);
-            break;
+            return (move_entity(p, mouse, s, gl));
         case sfKeyQ:
-            move_entity(p, (sfVector2f) {-mouse.x, mouse.y}, speed, gl);
-            break;
+            return (move_entity(p, (sfVector2f) {-mouse.x, mouse.y}, s, gl));
         case sfKeyS:
-            move_entity(p, (sfVector2f) {-mouse.x, -mouse.y}, speed, gl);
-            break;
+            return (move_entity(p, (sfVector2f) {-mouse.x, -mouse.y}, s, gl));
         case sfKeyD:
-            move_entity(p, (sfVector2f) {mouse.x, -mouse.y}, speed, gl);
+            return (move_entity(p, (sfVector2f) {mouse.x, -mouse.y}, s, gl));
     }
     move_camera(gl);
     return (0);
