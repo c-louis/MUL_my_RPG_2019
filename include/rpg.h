@@ -26,6 +26,10 @@ typedef struct gl {
     sfClock *clock;
     room_t **rooms;
     sfConvexShape ***light_polys;
+    entity_t *player;
+    sfView *main_view;
+    sfView *hud_view;
+    int room_index;
 } globals_t;
 
 void clean_memory(globals_t *gl);
@@ -50,5 +54,13 @@ void update_lights(sfConvexShape ***poly, globals_t *gl);
 
 void do_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room);
 void clean_rays(sfVector2f *casts, light_t *light, room_t *room);
+
+//Player init
+int init_player(globals_t *room);
+
+//Player movement function
+void mouse_move_event(sfEvent *event, entity_t *player, globals_t *gl, sfRenderWindow *window);
+void move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl);
+int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
 
 #endif

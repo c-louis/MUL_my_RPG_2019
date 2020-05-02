@@ -44,10 +44,6 @@ char *read_file_desc(int);
 
 static int char_printed;
 
-// int struct :
-// [------][------][------][------]
-// |-+ 0#-||SIZE--||PREC--||WIDTH-|
-
 enum pf_flags {
     F_MIN = 1 << 0,
     F_PLS = 1 << 1,
@@ -55,15 +51,6 @@ enum pf_flags {
     F_NUL = 1 << 3,
     F_HSH = 1 << 4
 };
-
-/*
-typedef struct conf{
-    int *flags;
-    int width;
-    int precision;
-    int size;
-} pf_conf_t;
-*/
 
 int my_printf(char const *, ...);
 

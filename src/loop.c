@@ -7,9 +7,9 @@
 
 #include "rpg.h"
 
-void draw_background(sfRenderWindow *window, globals_t *gl)
+void draw_hud(sfRenderWindow *window, globals_t *gl)
 {
-    room_t *room = gl->rooms[0];
+    room_t *room = gl->rooms[gl->room_index];
 
     for (int i = 0; room->walls && room->walls[i]; i++) 
         sfRenderWindow_drawConvexShape(window, room->walls[i], 0);
@@ -32,8 +32,11 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
 
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
-    draw_lights(window, gl);
+    sfRenderWindow_setView(window, gl->main_view);
     draw_background(window, gl);
-    //sfRenderWindow_drawSprite(window, gl->sprite, gl->state);
+    draw_lights(window, gl);
+    draw_entity(window, gl->player);
+    sfRenderWindow_setView(window, gl->hud_view);
+    draw_hud(window, gl);
     sfRenderWindow_display(window);
 }

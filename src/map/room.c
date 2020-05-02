@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** rpg
+** File description:
+** Launch map read rooms
+*/
+
 #include <stdlib.h>
 
 #include "engine.h"
@@ -18,13 +25,12 @@ void set_newrooms_data(room_t *room, dfile_t *data, int *i)
     rgb[1] = data->data[*i + 7];
     rgb[2] = data->data[*i + 8];
     rgb[3] = data->data[*i + 9];
-    printf("1 : %d 2 : %d\n", data->data[*i + 2], data->data[*i + 3]);
-    printf("Width : %hu Height : %hu\n", width, height);
     room->size = (sfVector2i) {(int) width, (int) height};
     room->color = sfColor_fromRGBA(rgb[0], rgb[1], rgb[2], rgb[3]);
     room->walls = NULL;
     room->lights = NULL;
     room->tex = sfTexture_create(room->size.x, room->size.y);
+    room->info = NULL;
 }
 
 int add_room(room_t ***rooms, int *size, dfile_t *data, int *i)

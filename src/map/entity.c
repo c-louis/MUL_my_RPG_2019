@@ -1,57 +1,85 @@
-#include "engine.h"
 /*
-entity_t *init_new_entity(sfVector2f pos, short radius, char status)
-{
-    light_t *light = malloc(sizeof(light_t));
+** EPITECH PROJECT, 2020
+** rpg
+** File description:
+** Launch map read entity
+*/
 
-    if (!light)
-        return (light);
-    light->position = pos;
-    light->radius = (float) radius;
-    light->state = (status == 0) ? sfFalse : sfTrue;
-    return (light);
-}
+#include "engine.h"
 
-int add_entity_to_room(room_t *room, sfVector2f pos, short radius, char status)
+int add_enemy_to_room(room_t *room, sfVector2f pos, char info[3])
 {
     int lc = 0;
-    light_t **new_lights;
+    entity_t **new_enemy;
 
-    for (int wc = 0; room->lights[lc]; lc++);
-    new_lights = malloc(sizeof(light_t *) * (lc + 2));
-    if (!new_lights)
+    for (int wc = 0; room->enemies[lc]; lc++);
+    new_enemy = malloc(sizeof(entity_t *) * (lc + 2));
+    if (!new_enemy)
         return (1);
     for (int i = 0; i < lc; i++)
-        new_lights[i] = room->walls[i];
-    new_lights[lc] = init_new_light(pos, radius, status);
-    new_lights[lc + 1] = 0;
-    if (!new_lights[lc])
+        new_enemy[i] = room->enemies[i];
+    new_enemy[lc] = init_new_enemy(pos, info);
+    new_enemy[lc + 1] = 0;
+    if (!new_enemy[lc])
         return (1);
+    if (room->enemies)
+        free(room->enemies);
+    room->enemies = new_enemy;
+    return (0);
+}
+
+int add_npc_to_room(room_t *room, sfVector2f pos, char info[3])
+{
+    int lc = 0;
+    entity_t **new_npc;
+
+    for (int wc = 0; room->npc[lc]; lc++);
+    new_npc = malloc(sizeof(entity_t *) * (lc + 2));
+    if (!new_npc)
+        return (1);
+    for (int i = 0; i < lc; i++)
+        new_npc[i] = room->npc[i];
+    new_npc[lc] = init_new_npc(pos, info);
+    new_npc[lc + 1] = 0;
+    if (!new_npc[lc])
+        return (1);
+    if (room->npc)
+        free(room->npc);
+    room->npc = new_npc;
+    return (0);
+}
+
+int add_entity_to_room(room_t *room, sfVector2f pos, char info[3])
+{
+    if (info[0] == 0)
+        if (add_enemy_to_room(room, pos, info))
+            return (1);
+    else
+        if (add_npc_to_room(room, pos, info))
+            return (1);
     return (0);
 }
 
 int add_entity(dfile_t *a_data, room_t *room, int *i)
 {
-    char *data = a_data->data;
+    unsigned char *data = a_data->data;
+    char info[3];
     short x;
     short y;
-    short radius;
-    char st;
     sfVector2f pos;
 
     data = data + *i;
     if (a_data->data_size < *i + 7)
         return (-(a_data->data_size));
-    radius = data[0] << 8;
-    radius |= data[1];
-    st = data[2];
-    x = data[3] << 8;
-    x != data[4];
-    y = data[5] << 8;
-    y = data[6];
+    info[0] = data[0];
+    x = data[1] << 8;
+    x != data[2];
+    y = data[3] << 8;
+    y = data[4];
+    info[1] = data[5];
+    info[2] = data[6];
     pos = (sfVector2f) {(float) x, (float) y};
-    if (add_entity_to_room(room, pos, radius, st))
+    if (add_entity_to_room(room, pos, info))
         return (1);
     return (0);
 }
-*/

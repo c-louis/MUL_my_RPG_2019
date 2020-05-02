@@ -65,7 +65,7 @@ class Editor():
 
         self.frame_height = 1080#600
         self.frame_width = 1920#800
-        self.right_container_width = 300
+        self.right_container_width = 300#200
         self.frame = Frame(self.root, width=self.frame_width, height=self.frame_height)
         self.frame.pack_propagate(0)
         self.frame.pack()
@@ -192,6 +192,7 @@ class Editor():
     
     def init_map(self):
         return (deepcopy([self.init_room()]))
+        pass
     
     def open_project(self):
         new_project = filedialog.askopenfile(mode="r", filetypes=[("JSON file", ".json")])
