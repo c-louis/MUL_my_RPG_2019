@@ -11,10 +11,13 @@
 void do_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room)
 {
     sfVector2f bound;
+    int written = 0;
+    sfFloatRect rect = {from.x, from.y, to.x, to.y};
 
     for (int i = 0; room->walls[i] != 0; i++)
-        if (check_raycast(buf, from, to, room->walls[i]))
-            return;
+        check_raycast(buf, &written, rect, room->walls[i]);
+    if (written)
+        return;
     if (check_bound(buf, from, to, (sfFloatRect) {0, 0, 1920, 0}))
         return;
     if (check_bound(buf, from, to, (sfFloatRect) {0, 0, 0, 1080}))
@@ -26,11 +29,13 @@ void do_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room)
 
 void triple_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room)
 {
-    float angle = 10.f;
+    float angle = 0.001f;
     sfVector2f small_to = {cosf(angle) * (to.x - from.x) - sinf(angle) * (to.y - from.y) + from.x,
-                           sinf(angle) * (to.x - from.x) - cosf(angle) * (to.y - from.y) + from.y};
+                           sinf(angle) * (to.x - from.x) + cosf(angle) * (to.y - from.y) + from.y};
     sfVector2f big_to = {cosf(-angle) * (to.x - from.x) - sinf(-angle) * (to.y - from.y) + from.x,
-                           sinf(-angle) * (to.x - from.x) - cosf(-angle) * (to.y - from.y) + from.y};
+                           sinf(-angle) * (to.x - from.x) + cosf(-angle) * (to.y - from.y) + from.y};
+
+    printf("to (%f, %f), small (%f, %f), big (%f, %f)\n", to.x, to.y, small_to.x, small_to.y, big_to.x, big_to.y);
     do_raycast(&(buf[0]), from, small_to, room);
     do_raycast(&(buf[1]), from, to, room);
     do_raycast(&(buf[2]), from, big_to, room);
