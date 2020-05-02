@@ -14,6 +14,12 @@ SRC	=	src/main.c	\
 		src/map/light.c		\
 		src/map/room.c		\
 		src/map/wall.c		\
+		src/light/intersect.c	\
+		src/light/init.c		\
+		src/light/raycast.c		\
+		src/light/update.c		\
+		src/light/utils.c		\
+		src/light/clean_ray.c	\
 
 OBJ	=	$(SRC:.c=.o)
 

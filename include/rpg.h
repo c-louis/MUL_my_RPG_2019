@@ -19,12 +19,13 @@
 
 typedef struct gl {
     sfVideoMode mode;
-    sfRenderTexture *tex;
-    sfSprite *sprite;
+    //sfRenderTexture *tex;
+    //sfSprite *sprite;
     sfShader *shader;
     sfRenderStates *state;
     sfClock *clock;
     room_t **rooms;
+    sfConvexShape ***light_polys;
 } globals_t;
 
 void clean_memory(globals_t *gl);
@@ -35,5 +36,19 @@ void init_globals(globals_t *gl);
 
 void main_loop(sfRenderWindow *window, globals_t *gl);
 
+// light
+int alloc_poly_light(sfConvexShape ***poly, room_t *room, light_t *light);
+sfConvexShape ***alloc_polygones(room_t *room);
+void free_polygones(sfConvexShape ***poly);
+
+sfVector2f get_inter(sfVector2f from, sfVector2f to, sfVector2f f_p,
+    sfVector2f t_p);
+
+sfVector2f *get_raycasts(light_t *light, room_t *room, int, int);
+int get_point_counts(room_t *room);
+void update_lights(sfConvexShape ***poly, globals_t *gl);
+
+void do_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room);
+void clean_rays(sfVector2f *casts, light_t *light, room_t *room);
 
 #endif
