@@ -11,4 +11,8 @@ void handle_event(sfRenderWindow *window, sfEvent *event, globals_t *gl)
 {
     if (event->type == sfEvtClosed)
         sfRenderWindow_close(window);
+    if (event->type == sfEvtKeyPressed)
+        move_player_event(window, event, gl);
+    if (event->type == sfEvtMouseMoved)
+        mouse_move_event(event, gl->player, gl);
 }

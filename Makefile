@@ -10,10 +10,25 @@ SRC	=	src/main.c	\
 		src/loop.c	\
 		src/init.c	\
 		src/clean.c	\
-		src/map/map_read.c	\
-		src/map/light.c		\
-		src/map/room.c		\
-		src/map/wall.c		\
+		src/file.c 	\
+		src/map/map_read.c		\
+		src/map/light.c			\
+		src/map/room.c			\
+		src/map/wall.c			\
+		src/map/information.c	\
+		src/map/init_entity.c	\
+		src/enemies/item.c		\
+		src/enemies/enemy.c			\
+		src/enemies/enemy_loot.c	\
+		src/enemies/enemy_body.c	\
+		src/enemies/item_body.c		\
+		src/enemies/static_read.c	\
+		src/player/movement.c		\
+		src/player/rotation.c		\
+		src/entity/draw.c			\
+		src/entity/math_utils.c		\
+		src/entity/movement.c		\
+		src/entity/copy.c			\
 
 OBJ	=	$(SRC:.c=.o)
 

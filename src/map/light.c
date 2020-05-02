@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** rpg
+** File description:
+** Launch map read light
+*/
+
 #include <stdlib.h>
 
 #include "engine.h"
@@ -29,14 +36,16 @@ int add_light_to_room(room_t *room, sfVector2f pos, short radius, char status)
     new_lights[lc + 1] = 0;
     if (!new_lights[lc])
         return (1);
+    if (room->lights)
+        free(room->lights);
+    room->lights = new_lights;
     return (0);
 }
 
 int add_light(dfile_t *a_data, room_t *room, int *i)
 {
     unsigned char *data = a_data->data;
-    short x;
-    short y;
+    short posi[2];
     short radius;
     char st;
     sfVector2f pos;
@@ -47,11 +56,11 @@ int add_light(dfile_t *a_data, room_t *room, int *i)
     radius = data[0] << 8;
     radius |= data[1];
     st = data[2];
-    x = data[3] << 8;
-    x != data[4];
-    y = data[5] << 8;
-    y = data[6];
-    pos = (sfVector2f) {(float) x, (float) y};
+    posi[0] = data[3] << 8;
+    posi[0] != data[4];
+    posi[1] = data[5] << 8;
+    posi[1] = data[6];
+    pos = (sfVector2f) {(float) posi[0], (float) posi[1]};
     if (add_light_to_room(room, pos, radius, st))
         return (-(a_data->data_size));
     return (7);

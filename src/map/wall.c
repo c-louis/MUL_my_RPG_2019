@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** rpg
+** File description:
+** Launch map read walls
+*/
+
 #include <stdlib.h>
 
 #include "engine.h"
@@ -8,8 +15,6 @@ sfConvexShape *init_new_wall(short *points, int pc)
     int p_i = 0;
     sfVector2f point;
 
-    for (int i = 0; i < pc * 2; i++)
-        printf("%i : %hu\n", i, points[i]);
     if (!shape)
         return (shape);
     sfConvexShape_setPointCount(shape, pc);
@@ -27,7 +32,6 @@ int add_wall_to_room(room_t *room, short *points, int point_count)
     sfConvexShape **new_walls;
 
     for (; room->walls && room->walls[wc]; wc++);
-    printf("Adding a wall ! %d\n", wc);
     new_walls = malloc(sizeof(sfConvexShape *) * (wc + 2));
     if (!new_walls)
         return (1);
@@ -49,7 +53,7 @@ int add_wall(dfile_t *a_data, room_t *room, int *i)
     short *points = malloc(sizeof(short) * (nb_points * 2));
 
     data = data + *i;
-    if (a_data->data_size < *i + (nb_points * 2))
+    if (a_data->data_size < *i + (nb_points * 2) || !points)
         return (-(a_data->data_size));
     for (int j = 2; j < (nb_points * 4) + 1; j += 2) {
         points[index] = data[j] << 8;

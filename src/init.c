@@ -5,10 +5,27 @@
 ** Init assets
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "rpg.h"
 #include "engine.h"
+#include "my.h"
+
+void init_engine(globals_t *gl)
+{
+    gl->rooms = get_rooms("assets/map.dat");
+    if (!gl->rooms) {
+        my_printf("Error in the Map you can't play with this map !\n");
+        exit(84);
+    }
+    gl->player = NULL;
+    gl->room_index = 0;
+    if (init_player(gl)) {
+        my_printf("Error in the Map you can't play with this map !\n");
+        exit(84);
+    }
+}
 
 void init_globals(globals_t *gl)
 {
@@ -16,19 +33,6 @@ void init_globals(globals_t *gl)
     gl->tex = sfTexture_create(gl->mode.width, gl->mode.height);
     gl->sprite = sfSprite_create();
     sfSprite_setTexture(gl->sprite, gl->tex, sfTrue);
-    gl->shader = sfShader_createFromFile("assets/shaders/vert_shader.vert", 0,
-        "assets/shaders/light.frag");
-    gl->state = malloc(sizeof(sfRenderStates));
-    gl->state->blendMode = sfBlendAlpha;
-    gl->state->shader = gl->shader;
-    gl->state->transform = sfTransform_Identity;
-    gl->state->texture = NULL;
     gl->clock = sfClock_create();
-    sfShader_setFloat2Parameter(gl->shader, "u_resolution",
-        gl->mode.width, gl->mode.height);
-    gl->rooms = get_rooms("assets/map.dat");
-    if (!gl->rooms) {
-        printf("Error in getrooms !\n");
-        exit(84);
-    }
+    init_engine(gl);
 }
