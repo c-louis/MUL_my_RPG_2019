@@ -34,11 +34,60 @@ entity_type = {
     "NPC": 1
 }
 
-info_type = {
-    "START": 0,
-    "END": 1,
-    "OBJ": 2,
-    "TRIGGER": 3,
+rooms = [
+    [
+        1920, 1080, colors["white"],
+        [
+            [types["object"], [1, 1], [119, 1], [119, 100], [1, 100]],
+            [types["object"], [200, 200], [200, 400], [100, 400]],
+            [types["object"], [800, 200], [800, 400], [700, 400]]
+            #[types["object"], [1, 1], [100, 1], [100, 179], [1, 179]],
+            #[types["entity"], entity_type["START_POSITION"], [0, 0]]
+        ]
+    ]
+]
+
+def write_map(data):
+    f = open(MAP_FILE, 'wb')
+    f.write(bytes(data))
+    f.close()
+
+def append_short(res, data):
+    if data > 65536:
+        print("Trying too write big value ! (%d)" % data)
+    res.append((data >> 8) & 0xFF)
+    res.append(data & 0xFF)
+
+def append_color(res, color):
+    if len(color) != 4:
+        print("Incorrect color : ", color)
+    for c in color:
+        res.append(c)
+
+def write_object(res, data):
+    res.append(len(data) - 1)
+    for point in data[1:]:
+        append_short(res, point[0])
+        append_short(res, point[1])
+
+def write_light(res, data):
+    append_short(res, data[1])
+    if data[2] not in [0, 1]:
+        print("Unknown light status:", data[2])
+    append_short(res, data[3][0])
+    append_short(res, data[3][1])
+
+def write_entity(res, data):
+    if data[1] not in entity_type.values():
+        print("Unknown entity type:", data[1])
+    res.append(data[1])
+    append_short(res, data[2][0])
+    append_short(res, data[2][1])
+
+write_type = {
+    types["object"]: write_object,
+    types["light"]: write_light,
+    types["entity"]: write_entity
 }
 
 class Editor():

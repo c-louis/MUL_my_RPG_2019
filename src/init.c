@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2020
+65;6001;1c** EPITECH PROJECT, 2020
 ** rpg
 ** File description:
 ** Init assets
@@ -30,7 +30,7 @@ void init_engine(globals_t *gl)
 void init_globals(globals_t *gl)
 {
     gl->mode = (sfVideoMode) {1920, 1080, 32};
-    gl->tex = sfTexture_create(gl->mode.width, gl->mode.height);
+    gl->tex = sfRenderTexture_create(gl->mode.width, gl->mode.height, sfFalse);
     gl->sprite = sfSprite_create();
     sfSprite_setTexture(gl->sprite, gl->tex, sfTrue);
     gl->clock = sfClock_create();
