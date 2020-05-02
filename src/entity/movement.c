@@ -44,6 +44,7 @@ int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
         }
         return (1);
     }
+    move_camera(gl);
     entity->pos = next_position;
     return (0);
 }

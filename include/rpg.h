@@ -29,6 +29,7 @@ typedef struct gl {
     entity_t *player;
     sfView *main_view;
     sfView *hud_view;
+    sfGlslVec3  *light_shader_obj;
     int room_index;
 } globals_t;
 

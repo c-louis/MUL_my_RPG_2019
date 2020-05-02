@@ -80,6 +80,7 @@ void init_lights_at_room(globals_t *gl, int index)
     sfShader_setIntUniform(gl->shader, "u_lights_count", lights_count);
     gl->light_polys = alloc_polygones(gl->rooms[index]);
     update_lights(gl->light_polys, gl);
+    gl->light_shader_obj = lights;
 }
 
 void init_globals(globals_t *gl)

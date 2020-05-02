@@ -44,6 +44,5 @@ int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl)
         case sfKeyD:
             return (move_entity(p, (sfVector2f) {mouse.x, -mouse.y}, s, gl));
     }
-    move_camera(gl);
     return (0);
 }
