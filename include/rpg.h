@@ -20,8 +20,6 @@
 
 typedef struct gl {
     sfVideoMode mode;
-    //sfRenderTexture *tex;
-    //sfSprite *sprite;
     sfShader *shader;
     sfRenderStates *state;
     sfClock *clock;
@@ -48,8 +46,8 @@ void handle_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
 void init_globals(globals_t *gl);
 void main_loop(sfRenderWindow *window, globals_t *gl);
 
-//hud
-hud_t *init_hud(globals_t *gl);
+// init Hud
+void init_hud(globals_t *gl);
 void set_points(sfConvexShape *shape, sfFloatRect rect);
 
 // light
@@ -74,6 +72,7 @@ int init_player(globals_t *room);
 void mouse_move_event(sfEvent *, entity_t *, globals_t *, sfRenderWindow *);
 int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl);
 int move_player_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
+void move_camera(globals_t *gl);
 
 // Room init
 int add_wall(dfile_t *a_data, room_t *room, int *i);
@@ -94,5 +93,19 @@ int add_loot(entity_t *entity, dfile_t *data, int *i);
 int add_item(e_bank_t *bank, int *item_size, dfile_t *data, int *i);
 int add_body_to_item(dfile_t *a_data, loot_t *item, int *i, int j);
 int add_enemy_static(e_bank_t *bank, int *size, dfile_t *data, int *i);
+
+// Light handling
+int check_bound(sfVector2f *buf, sfVector2f from, sfVector2f to,
+    sfFloatRect rect);
+int check_raycast(sfVector2f *buf, sfFloatRect rect, int *written,
+    sfConvexShape *shape);
+
+// Debugger functions
+void show_rooms_information(room_t **rooms);
+
+// Gameplay function
+int is_on_end(globals_t *gl);
+void swap_room_event(sfEvent *event, globals_t *gl);
+void show_swap_room_key(sfRenderWindow *window, globals_t *gl);
 
 #endif

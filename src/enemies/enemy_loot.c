@@ -36,6 +36,7 @@ int add_loot(entity_t *entity, dfile_t *data, int *i)
     }
     new[count + 1] = 0;
     entity->loot_table = new;
-    free(old);
+    if (old)
+        free(old);
     return (4);
 }

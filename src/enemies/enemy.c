@@ -43,9 +43,9 @@ int add_enemy_static(e_bank_t *bank, int *size, dfile_t *data, int *i)
     }
     if (set_newentity_data(new[*size], data, i, size))
         return (-(data->data_size));
-    *size += 1;
-    bank->enemies_bank = new;
+    *size = *size + 1;
     if (old)
         free(old);
+    bank->enemies_bank = new;
     return (6);
 }

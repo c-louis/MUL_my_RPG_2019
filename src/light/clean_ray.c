@@ -20,7 +20,9 @@ float get_cast_angle(sfVector2f p1, sfVector2f p2, sfVector2f p3)
 
 float cmp_casts(sfVector2f pos1, sfVector2f pos2, sfVector2f light)
 {
-    return (get_cast_angle(light, (sfVector2f) {0, 0}, pos1) - get_cast_angle(light, (sfVector2f) {0, 0}, pos2));
+    return (get_cast_angle(light,
+        (sfVector2f) {0, 0}, pos1) -
+        get_cast_angle(light, (sfVector2f) {0, 0}, pos2));
 }
 
 void sort_casts(sfVector2f *array, int len, sfVector2f pos)
@@ -51,6 +53,4 @@ void clean_rays(sfVector2f *casts, light_t *light, room_t *room)
     do_raycast(&casts[pt_size - 1], light->position,
         (sfVector2f) {1920, 1080}, room);
     sort_casts(casts, pt_size, light->position);
-    //for (int i = 0; i < pt_size; i++)
-    //printf("raycast %d: %f, %f\n", i, casts[i].x, casts[i].y);
 }

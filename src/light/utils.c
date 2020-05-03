@@ -5,14 +5,14 @@
 ** raycast utils
 */
 
-#include "engine.h"
 #include "rpg.h"
+
+//TODO: add only if in window bounds
 
 int get_point_counts(room_t *room)
 {
     int count = 0;
 
-    //TODO: add only if in window bounds
     for (int i = 0; room->walls && room->walls[i] != 0; i++)
         count += sfConvexShape_getPointCount(room->walls[i]) * 3;
     return (count + 4);

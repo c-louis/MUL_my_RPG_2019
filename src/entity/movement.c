@@ -34,7 +34,7 @@ int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
     sfConvexShape **walls = gl->rooms[gl->room_index]->walls;
 
     if (!entity || !entity->body)
-        return;
+        return (1);
     for (int i = 0; entity->body && entity->body[i]; i++) {
         sfConvexShape_setPosition(entity->body[i], next_position);
         if (!is_newpos_colliding_walls(entity->body[i], walls))

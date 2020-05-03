@@ -5,6 +5,8 @@
 ** Launch map read entity
 */
 
+#include <stdlib.h>
+
 #include "rpg.h"
 
 int add_enemy_to_room(room_t *room, sfVector2f pos, char info[3], dfile_t *data)

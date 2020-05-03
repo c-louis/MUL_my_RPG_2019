@@ -40,6 +40,7 @@ SRC	=	src/main.c	\
 		src/rooms/getter.c			\
 		src/rooms/debugger.c		\
 		src/bank/getter.c			\
+		src/bank/debugger.c			\
 		src/hud/init.c				\
 		src/hud/utils.c				\
 

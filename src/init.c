@@ -48,6 +48,7 @@ int init_player(globals_t *room)
     room->player->pos = pos;
     return (0);
 }
+
 void init_text_end_room(globals_t *gl)
 {
     gl->end_room = sfText_create();
@@ -61,13 +62,14 @@ void init_engine(globals_t *gl)
 {
     gl->bank = get_enemies("assets/enemy.dat");
     if (!gl->bank)
-        my_printf("Error in the Enemies / loot library can't play with this set !\n");
+        my_printf("Error in the Enemies / loot library !\n");
     gl->rooms = get_rooms("assets/map.dat", gl);
     if (!gl->rooms) {
         my_printf("Error in the Map you can't play with this map !\n");
         exit(84);
     }
     show_rooms_information(gl->rooms);
+    show_bank_information(gl->bank);
     init_text_end_room(gl);
     gl->player = NULL;
     gl->room_index = 0;
@@ -87,7 +89,11 @@ void init_lights_at_room(globals_t *gl, int index)
     if (!(lights = malloc(sizeof(sfGlslVec3) * lights_count)))
         return;
     for (int i = 0; i < lights_count; i++)
-        lights[i] = (sfGlslVec3) {gl->rooms[index]->lights[i]->position.x, gl->rooms[index]->lights[i]->position.y, gl->rooms[index]->lights[i]->radius};
+        lights[i] = (sfGlslVec3) {
+            gl->rooms[index]->lights[i]->position.x,
+            gl->rooms[index]->lights[i]->position.y,
+            gl->rooms[index]->lights[i]->radius
+        };
     sfShader_setVec3UniformArray(gl->shader, "u_lights", lights, lights_count);
     sfShader_setIntUniform(gl->shader, "u_lights_count", lights_count);
     gl->light_polys = alloc_polygones(gl->rooms[index]);
@@ -95,34 +101,48 @@ void init_lights_at_room(globals_t *gl, int index)
     gl->light_shader_obj = lights;
 }
 
-void init_globals(globals_t *gl)
+void init_state(globals_t *gl)
 {
-    gl->mode = (sfVideoMode) {1920, 1080, 32};
-
-    //gl->tex = sfRenderTexture_create(gl->mode.width, gl->mode.height, sfFalse);
-    //gl->sprite = sfSprite_create();
-    //sfSprite_setTexture(gl->sprite, sfRenderTexture_getTexture(gl->tex), sfTrue);
-    //sfSprite_setScale(gl->sprite, (sfVector2f) {1, -1});
-    //sfSprite_setPosition(gl->sprite, (sfVector2f) {0, gl->mode.height});
-    gl->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
-        "assets/shaders/light.frag");
     gl->state = malloc(sizeof(sfRenderStates));
     gl->state->blendMode = sfBlendAlpha;
     gl->state->shader = gl->shader;
     gl->state->transform = sfTransform_Identity;
     gl->state->texture = NULL;
-    gl->clock = sfClock_create();
-    sfShader_setVec2Uniform(gl->shader, "u_resolution",
-        (sfGlslVec2) {gl->mode.width, gl->mode.height});
-    //sfShader_setTextureUniform(gl->shader, "u_screen", sfRenderTexture_getTexture(gl->tex));
-    gl->clock = sfClock_create();
+}
+
+void init_views(globals_t *gl)
+{
     gl->main_view = sfView_create();
     gl->hud_view = sfView_create();
     sfView_setSize(gl->main_view, (sfVector2f) {1920, 1080});
     sfView_setSize(gl->hud_view, (sfVector2f) {1920, 1080});
+    sfView_setCenter(gl->hud_view,
+        (sfVector2f) {gl->mode.width / 2, gl->mode.height / 2});
+    sfView_setCenter(gl->main_view, gl->player->pos);
+}
+
+void init_globals(globals_t *gl)
+{
+    gl->mode = (sfVideoMode) {1920, 1080, 32};
+
+    //gl->tex = sfRenderTexture_create(
+        //gl->mode.width, gl->mode.height, sfFalse);
+    //gl->sprite = sfSprite_create();
+    //sfSprite_setTexture(gl->sprite,
+        //sfRenderTexture_getTexture(gl->tex), sfTrue);
+    //sfSprite_setScale(gl->sprite, (sfVector2f) {1, -1});
+    //sfSprite_setPosition(gl->sprite, (sfVector2f) {0, gl->mode.height});
+    gl->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
+        "assets/shaders/light.frag");
+    init_state(gl);
+    gl->clock = sfClock_create();
+    sfShader_setVec2Uniform(gl->shader, "u_resolution",
+        (sfGlslVec2) {gl->mode.width, gl->mode.height});
+    //sfShader_setTextureUniform(gl->shader, "u_screen",
+        //sfRenderTexture_getTexture(gl->tex));
+    gl->clock = sfClock_create();
     init_engine(gl);
     init_lights_at_room(gl, 0);
-    gl->hud = init_hud(gl);
-    sfView_setCenter(gl->hud_view, (sfVector2f) {gl->mode.width / 2, gl->mode.height / 2});
-    sfView_setCenter(gl->main_view, gl->player->pos);
+    init_views(gl);
+    init_hud(gl);
 }

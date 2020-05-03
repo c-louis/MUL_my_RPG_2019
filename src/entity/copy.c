@@ -20,6 +20,7 @@ sfConvexShape **copy_body(sfConvexShape **body)
         return (0);
     for (i = 0; body[i]; i++)
         copy[i] = sfConvexShape_copy(body[i]);
+    copy[i] = 0;
     return (copy);
 }
 

@@ -89,6 +89,7 @@ float get_angle(sfVector2f player, sfVector2f mouse);
 float get_orientation(sfVector2f a, sfVector2f b, sfVector2f p);
 int is_colliding(sfConvexShape *shape, sfVector2f point);
 int are_shape_colliding(sfConvexShape *shape1, sfConvexShape *shape2);
+float get_distance(sfVector2f pos1, sfVector2f pos2);
 
 // entity drawing
 int draw_entity(sfRenderWindow *window, entity_t *entity);

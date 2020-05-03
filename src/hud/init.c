@@ -5,6 +5,8 @@
 ** hud init
 */
 
+#include <stdlib.h>
+
 #include "my.h"
 #include "rpg.h"
 
@@ -83,7 +85,7 @@ void init_xp_text(hud_t *hud, globals_t *gl)
         (gl->mode.width + 170) / 2 + 5, gl->mode.height - 190 + 5});
 }
 
-hud_t *init_hud(globals_t *gl)
+void init_hud(globals_t *gl)
 {
     hud_t *hud = malloc(sizeof(hud_t));
 
@@ -97,5 +99,5 @@ hud_t *init_hud(globals_t *gl)
     init_life(hud, gl);
     init_xp(hud, gl);
     init_xp_text(hud, gl);
-    return (hud);
+    gl->hud = hud;
 }
