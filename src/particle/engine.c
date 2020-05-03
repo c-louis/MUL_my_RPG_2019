@@ -45,5 +45,14 @@ void append_system(part_t *engine, syst_t *system)
 
 void remove_system(part_t *engine, syst_t *system)
 {
-    return;
+    syst_t **syst = engine->systems;
+    int ec = 0;
+    int index = 0;
+
+    for (; syst[ec]; ec++);
+    for (int i = 0; i < ec; i++)
+        if (syst[i] != system)
+            syst[index++] = syst[i];
+    syst[index] = 0;
+    free(system);
 }

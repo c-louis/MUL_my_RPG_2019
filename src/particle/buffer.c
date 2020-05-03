@@ -32,14 +32,23 @@ void set_pixel(framebuffer_t *fb, int x, int y, sfColor color)
     fb->pixels[pos + 3] = 255;
 }
 
-void clear_fb(framebuffer_t *fb)
+void clear_fb(framebuffer_t *fb, double delta)
 {
     for (int i = 0; i < fb->width * fb->height * 4; i++)
         fb->pixels[i] = 0;
 }
 
-void update_engine(part_t *engine)
+void update_engine(part_t *engine, double delta)
 {
+    for (int i = 0; engine->systems[i] != 0; i++){
+        if (engine->systems[i]->desc->duration == -1)
+            continue;
+        engine->systems[i]->desc->duration -= delta;
+        if (engine->systems[i]->desc->duration < 0){
+            remove_system(engine, engine->systems[i]);
+            i = 0;
+        }
+    }
     sfTexture_updateFromPixels(engine->fb_tex, engine->fb->pixels,
         engine->fb->width, engine->fb->height, 0, 0);
 }
