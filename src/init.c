@@ -51,11 +51,12 @@ int init_player(globals_t *room)
 void init_text_end_room(globals_t *gl)
 {
     gl->end_room = sfText_create();
-    sfFont *font = sfFont_createFromFile("asset/font/sweet_purple.ttf");
+    sfFont *font = sfFont_createFromFile("assets/font/sweet_purple.ttf");
     sfText_setFont(gl->end_room, font);
     sfText_setColor(gl->end_room, sfRed);
     sfText_setString(gl->end_room, "Press E to go to next room !\n");
 }
+
 void init_engine(globals_t *gl)
 {
     gl->rooms = get_rooms("assets/map.dat");
@@ -118,5 +119,7 @@ void init_globals(globals_t *gl)
     sfView_setSize(gl->hud_view, (sfVector2f) {1920, 1080});
     init_engine(gl);
     init_lights_at_room(gl, 0);
+    gl->hud = init_hud(gl);
+    sfView_setCenter(gl->hud_view, (sfVector2f) {gl->mode.width / 2, gl->mode.height / 2});
     sfView_setCenter(gl->main_view, gl->player->pos);
 }

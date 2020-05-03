@@ -38,6 +38,8 @@ SRC	=	src/main.c	\
 		src/entity/copy.c			\
 		src/rooms/getter.c			\
 		src/rooms/debugger.c		\
+		src/hud/init.c				\
+		src/hud/utils.c				\
 
 OBJ	=	$(SRC:.c=.o)
 

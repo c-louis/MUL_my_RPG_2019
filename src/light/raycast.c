@@ -35,7 +35,7 @@ void triple_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *roo
     sfVector2f big_to = {cosf(-angle) * (to.x - from.x) - sinf(-angle) * (to.y - from.y) + from.x,
                            sinf(-angle) * (to.x - from.x) + cosf(-angle) * (to.y - from.y) + from.y};
 
-    printf("to (%f, %f), small (%f, %f), big (%f, %f)\n", to.x, to.y, small_to.x, small_to.y, big_to.x, big_to.y);
+    //printf("to (%f, %f), small (%f, %f), big (%f, %f)\n", to.x, to.y, small_to.x, small_to.y, big_to.x, big_to.y);
     do_raycast(&(buf[0]), from, small_to, room);
     do_raycast(&(buf[1]), from, to, room);
     do_raycast(&(buf[2]), from, big_to, room);

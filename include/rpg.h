@@ -16,6 +16,7 @@
 #include <SFML/Audio.h>
 
 #include "engine.h"
+#include "hud.h"
 
 typedef struct gl {
     sfVideoMode mode;
@@ -32,6 +33,7 @@ typedef struct gl {
     sfGlslVec3  *light_shader_obj;
     sfText *end_room;
     int room_index;
+    hud_t *hud;
 } globals_t;
 
 void clean_memory(globals_t *gl);
@@ -41,6 +43,10 @@ void handle_event(sfRenderWindow *window, sfEvent *event, globals_t *gl);
 void init_globals(globals_t *gl);
 
 void main_loop(sfRenderWindow *window, globals_t *gl);
+
+//hud
+hud_t *init_hud(globals_t *gl);
+void set_points(sfConvexShape *shape, sfFloatRect rect);
 
 // light
 int alloc_poly_light(sfConvexShape ***poly, room_t *room, light_t *light);
