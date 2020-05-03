@@ -45,6 +45,7 @@ int init_player(globals_t *room)
         return (1);
     init_player_body(room->player->body[0], pos);
     room->player->body[1] = 0;
+    room->player->weapon_list = 0;
     room->player->pos = pos;
     return (0);
 }
@@ -52,10 +53,15 @@ int init_player(globals_t *room)
 void init_text_end_room(globals_t *gl)
 {
     gl->end_room = sfText_create();
+    gl->quest = sfText_create();
     sfFont *font = sfFont_createFromFile("assets/font/sweet_purple.ttf");
     sfText_setFont(gl->end_room, font);
     sfText_setColor(gl->end_room, sfRed);
     sfText_setString(gl->end_room, "Press E to go to next room !\n");
+    sfText_setFont(gl->quest, font);
+    sfText_setColor(gl->quest, sfWhite);
+    sfText_setString(gl->quest, "Quest: Get out of the Prison !");
+    sfText_setPosition(gl->quest, (sfVector2f) {10, 10});
 }
 
 void init_engine(globals_t *gl)
@@ -121,17 +127,30 @@ void init_views(globals_t *gl)
     sfView_setCenter(gl->main_view, gl->player->pos);
 }
 
+void init_room_object(room_t *room, globals_t *gl)
+{
+    loot_t *object;
+
+    for (int i = 0; room->info[i]; i++) {
+        if (room->info[i]->type != 2)
+            continue;
+        printf("Obj_type = %d\n", room->info[i]->id_obj);
+        add_item_to_word(gl, room->info[i]->id_obj, room->info[i]->pos);
+    }
+}
+
+void init_object(globals_t *gl)
+{
+    room_t **rooms = gl->rooms;
+
+    for (int i = 0; rooms && rooms[i]; ++i) {
+        init_room_object(rooms[i], gl);
+    }
+}
+
 void init_globals(globals_t *gl)
 {
     gl->mode = (sfVideoMode) {1920, 1080, 32};
-
-    //gl->tex = sfRenderTexture_create(
-        //gl->mode.width, gl->mode.height, sfFalse);
-    //gl->sprite = sfSprite_create();
-    //sfSprite_setTexture(gl->sprite,
-        //sfRenderTexture_getTexture(gl->tex), sfTrue);
-    //sfSprite_setScale(gl->sprite, (sfVector2f) {1, -1});
-    //sfSprite_setPosition(gl->sprite, (sfVector2f) {0, gl->mode.height});
     gl->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
         "assets/shaders/light.frag");
     init_state(gl);
@@ -145,5 +164,6 @@ void init_globals(globals_t *gl)
     init_lights_at_room(gl, 0);
     init_views(gl);
     init_hud(gl);
+    init_object(gl);
     gl->particle = create_engine(gl->mode);
 }

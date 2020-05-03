@@ -57,10 +57,12 @@ void set_item_pos(loot_t *loot, sfVector2f pos)
 
 void remove_item_from_word(globals_t *gl, loot_t *loot)
 {
+    printf("Remove item !\n");
     int lc = 0;
     int index = 0;
     loot_t **new;
     loot_t **old = gl->rooms[gl->room_index]->items;
+    printf("Remove item !\n");
 
     for (; old && old[lc]; lc++);
     new = malloc(sizeof(loot_t *) * (lc));

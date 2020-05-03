@@ -7,7 +7,8 @@ colors = {
     "red": [255, 0, 0, 255],
     "green": [0, 255, 0, 255],
     "blue": [0, 0, 255, 255],
-    "brown": [102, 65, 30, 255]
+    "brown": [102, 65, 30, 255],
+    "yellow": [250, 250, 0, 255]
 }
 
 types = {
@@ -18,11 +19,11 @@ types = {
 #def enemies : body -> point -> color | loot [id][quantity][prob[0,100]] | 100*100px max x50y50 max
 enemies = [
     [
-        100, 20, 20, 100,
+        150, 20, 20, 100,
         [
             [types["body"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
             [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
-            [types["loot"], 0, 5, 50],
+            [types["loot"], 0, 5, 20],
         ]
     ],
     [
@@ -40,6 +41,17 @@ enemies = [
             [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
             [types["loot"], 1, 5, 50],
         ]
+    ],
+    [
+        250, 100, 100, 100,
+        [
+            [types["body"], [0, 10], [0, 200], [210, 200], [210, 10], colors["brown"]],
+            [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
+            [types["body"], [160, 20], [160, 50], [190, 50], [190, 50], colors["green"]],
+            [types["body"], [200, 20], [230, 20], [230, 50], [200, 50], colors["green"]],
+            [types["loot"], 1, 5, 70],
+            [types["loot"], 0, 10, 20],
+        ]
     ]
 ]
 #def loot : body -> point -> color 100*100px max Center : x50y50
@@ -56,6 +68,13 @@ loots = [
             [types["shape"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
             [types["shape"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
             [types["shape"], [20, 0], [20, 10], [30, 10], [30, 0], colors["brown"]],
+        ]
+    ],
+    [
+        [
+            [types["shape"], [0, 50], [0, 75], [150, 75], [150, 50], colors["white"]],
+            [types["shape"], [50, 25], [100, 25], [100, 100], [50, 100], colors["brown"]],
+            [types["shape"], [150, 50], [150, 75], [215, 60], colors["white"]],
         ]
     ],
 ]

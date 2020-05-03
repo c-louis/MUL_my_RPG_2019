@@ -32,6 +32,7 @@ typedef struct gl {
     e_bank_t *bank;
     sfGlslVec3  *light_shader_obj;
     sfText *end_room;
+    sfText *quest;
     int room_index;
     hud_t *hud;
     part_t *particle;
@@ -114,5 +115,9 @@ void show_entities(entity_t **npc, entity_t **e);
 int is_on_end(globals_t *gl);
 void swap_room_event(sfEvent *event, globals_t *gl);
 void show_swap_room_key(sfRenderWindow *window, globals_t *gl);
+
+void add_item_to_word(globals_t *gl, int id, sfVector2f pos);
+void remove_item_from_word(globals_t *gl, loot_t *loot);
+loot_t *copy_item(globals_t *gl, int id);
 
 #endif

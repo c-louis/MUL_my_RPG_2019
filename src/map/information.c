@@ -59,7 +59,7 @@ int add_info(dfile_t *a_data, room_t *room, int *i)
     pos[0] |= data[3];
     pos[1] = data[4] << 8;
     pos[1] |= data[5];
-    if (a_data->data_size < *i + 6 && type == 2)
+    if (type == 2)
         id = data[6];
     posi = (sfVector2f) {(float) pos[0], (float) pos[1]};
     if (add_info_to_room(room, type, posi, id))
