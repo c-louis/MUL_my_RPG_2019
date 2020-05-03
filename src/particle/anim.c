@@ -65,5 +65,5 @@ void animate_engine(part_t *engine, double delta)
     clear_fb(engine->fb);
     for (int i = 0; engine->systems[i] != 0; i++)
         animate_system(engine->fb, engine->systems[i], delta);
-    update_engine(engine);
+    update_engine(engine, delta);
 }
