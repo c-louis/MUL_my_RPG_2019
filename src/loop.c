@@ -118,6 +118,18 @@ void kill_enemies(globals_t *gl)
     check_enemies_life(gl);
 }
 
+void enemy_attack(globals_t *gl)
+{
+    entity_t **enemies = gl->rooms[gl->room_index]->enemies;
+
+    for (int i = 0; enemies && enemies[i]; i++) {
+        if (get_distance(enemies[i]->pos, gl->player->pos) <
+            enemies[i]->weapon_list[0]->range)
+            use_weapon(enemies[i], enemies[i]->weapon_list[0], 
+                (sfVector2i) {gl->player->pos.x, gl->player->pos.y}, gl);
+    }
+}
+
 void main_loop(sfRenderWindow *window, globals_t *gl)
 {
     sfTime time = sfClock_getElapsedTime(gl->clock);
@@ -126,7 +138,8 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
 
     update_light_position(window, gl);
     update_enemies_pos(gl);
-    kill_enemies(gl);
+    enemy_attack(gl);
+    //kill_enemies(gl);
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     draw_mainview(window, gl);

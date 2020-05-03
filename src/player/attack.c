@@ -154,9 +154,18 @@ void player_melee_weapon(entity_t *entity, weapon_t *weapon, globals_t *gl)
 void use_melee_weapon(entity_t *entity, 
     weapon_t *weapon, globals_t *gl)
 {
+    sfTime time = sfClock_getElapsedTime(weapon->clock);
+    float seconds = sfTime_asSeconds(time);
+    
     if (entity == gl->player) {
         player_melee_weapon(entity, weapon, gl);
         return;
+    }
+    if (get_distance(entity->pos, gl->player->pos) < weapon->range && seconds >= weapon->cooldown) {
+        if (update_life(gl->hud, -weapon->damage)) {
+            printf("You are dead normally !\n");
+        }
+        sfClock_restart(weapon->clock);
     }
 }
 

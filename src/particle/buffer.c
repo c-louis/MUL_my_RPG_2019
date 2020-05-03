@@ -32,7 +32,7 @@ void set_pixel(framebuffer_t *fb, int x, int y, sfColor color)
     fb->pixels[pos + 3] = 255;
 }
 
-void clear_fb(framebuffer_t *fb, double delta)
+void clear_fb(framebuffer_t *fb )
 {
     for (int i = 0; i < fb->width * fb->height * 4; i++)
         fb->pixels[i] = 0;
