@@ -14,7 +14,7 @@ int add_enemy_to_room(room_t *room, sfVector2f pos, char info[3], dfile_t *data)
     int lc = 0;
     entity_t **new_enemy;
 
-    for (int wc = 0; room->enemies && room->enemies[lc]; lc++);
+    for (; room->enemies && room->enemies[lc]; lc++);
     new_enemy = malloc(sizeof(entity_t *) * (lc + 2));
     if (!new_enemy)
         return (1);

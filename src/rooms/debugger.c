@@ -30,6 +30,11 @@ void show_entities(entity_t **npc, entity_t **e)
     for (int i = 0; e && e[i]; i++) {
         my_printf("ENEMY %d :\n", i);
         my_printf("Pos : x = %f y = %f\n", e[i]->pos.x, e[i]->pos.y);
+        for (int y = 0; e[i]->loot_table && 
+            e[i]->loot_table[y] != NULL; y++) {
+            my_printf("loot (%d) :", y);
+            my_printf("id : %d\n", e[i]->loot_table[y]->id);
+        }
     }
 }
 

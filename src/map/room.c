@@ -16,6 +16,7 @@ void set_newrooms_null(room_t *room)
     room->info = NULL;
     room->enemies = NULL;
     room->npc = NULL;
+    room->items = NULL;
 }
 
 void set_newrooms_data(room_t *room, dfile_t *data, int *i)

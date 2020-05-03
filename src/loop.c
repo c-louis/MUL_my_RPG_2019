@@ -51,6 +51,7 @@ void draw_hud(sfRenderWindow *window, globals_t *gl)
     sfRenderWindow_drawConvexShape(window, gl->hud->life_bar, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->x_container, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->xp_bar, 0);
+    sfRenderWindow_drawConvexShape(window, gl->hud->armor_bar, 0);
     sfRenderWindow_drawText(window, gl->hud->text_level, 0);
 }
 
@@ -75,6 +76,16 @@ void update_enemies_pos(globals_t *gl)
     }
 }
 
+void draw_items(sfRenderWindow *window, globals_t *gl)
+{
+    room_t *room = gl->rooms[gl->room_index];
+    for (int i = 0; room->items && room->items[i]; i++) {
+        for (int y = 0; room->items[i]->body && room->items[i]->body[y]; y++) {
+            sfRenderWindow_drawConvexShape(window, room->items[i]->body[y], 0);
+        }
+    }
+}
+
 void draw_mainview(sfRenderWindow *window, globals_t *gl)
 {
     sfRenderWindow_setView(window, gl->main_view);
@@ -82,6 +93,7 @@ void draw_mainview(sfRenderWindow *window, globals_t *gl)
     draw_walls(window, gl);
     draw_entity(window, gl->player);
     draw_enemies(window, gl);
+    draw_items(window, gl);
     if (is_on_end(gl)) {
         sfRenderWindow_drawText(window, gl->end_room, 0);
     }
@@ -89,8 +101,21 @@ void draw_mainview(sfRenderWindow *window, globals_t *gl)
 
 void draw_hudview(sfRenderWindow *window, globals_t *gl)
 {
+    // TEST CALL :)
+    update_xp(gl->hud, 1);
+    update_life(gl->hud, -0.1);
     sfRenderWindow_setView(window, gl->hud_view);
     draw_hud(window, gl);
+}
+
+void kill_enemies(globals_t *gl)
+{
+    room_t *room = gl->rooms[gl->room_index];
+
+    for (int i = 0; room->enemies && room->enemies[i]; i++) {
+        room->enemies[i]->stat->health -= 10;
+    }
+    check_enemies_life(gl);
 }
 
 void main_loop(sfRenderWindow *window, globals_t *gl)
@@ -101,8 +126,10 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
 
     update_light_position(window, gl);
     update_enemies_pos(gl);
+    kill_enemies(gl);
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     draw_mainview(window, gl);
+    draw_hudview(window, gl);
     sfRenderWindow_display(window);
 }

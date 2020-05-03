@@ -23,6 +23,7 @@ int set_newentity_data(entity_t *enemy, dfile_t *data, int *i, int *size)
     enemy->body = NULL;
     enemy->loot_table = NULL;
     enemy->id = *size;
+    enemy->pos = (sfVector2f) {0, 0};
     return (0);
 }
 

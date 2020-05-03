@@ -93,6 +93,8 @@ int add_loot(entity_t *entity, dfile_t *data, int *i);
 int add_item(e_bank_t *bank, int *item_size, dfile_t *data, int *i);
 int add_body_to_item(dfile_t *a_data, loot_t *item, int *i, int j);
 int add_enemy_static(e_bank_t *bank, int *size, dfile_t *data, int *i);
+void check_enemies_life(globals_t *gl);
+int move_enemy(entity_t *entity, globals_t *gl);
 
 // Light handling
 int check_bound(sfVector2f *buf, sfVector2f from, sfVector2f to,
@@ -102,6 +104,9 @@ int check_raycast(sfVector2f *buf, sfFloatRect rect, int *written,
 
 // Debugger functions
 void show_rooms_information(room_t **rooms);
+void show_bank_information(e_bank_t *bank);
+void show_bank_loots(loot_t **loots);
+void show_entities(entity_t **npc, entity_t **e);
 
 // Gameplay function
 int is_on_end(globals_t *gl);

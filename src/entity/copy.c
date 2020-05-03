@@ -47,6 +47,7 @@ loot_table_t **copy_loottable(loot_table_t **loots)
         return (0);
     for (i = 0; loots[i]; i++)
         copy[i] = copy_loot(loots[i]);
+    copy[i] = 0;
     return (copy);
 }
 

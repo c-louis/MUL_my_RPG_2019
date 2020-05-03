@@ -27,9 +27,12 @@ typedef struct weapon {
     enum weapon_type type;
     float damage;
     float range;
+    float cooldown;
+    sfClock *clock;
 } weapon_t;
 
 typedef struct loot_bank {
+    int id;
     sfConvexShape **body;
 } loot_t;
 
@@ -59,6 +62,7 @@ typedef struct entity {
     sfVector2f pos;
     entity_stat_t *stat;
     loot_table_t **loot_table;
+    weapon_t **weapon_list;
 } entity_t;
 
 typedef struct s_light {
@@ -72,6 +76,7 @@ typedef struct s_room {
     light_t **lights;
     entity_t **enemies;
     entity_t **npc;
+    loot_t **items;
     info_t **info;
     sfConvexShape **walls;
     sfColor color;
@@ -97,6 +102,7 @@ int draw_entity(sfRenderWindow *window, entity_t *entity);
 // Entity
 entity_t *copy_entity(entity_t *entity);
 int is_newpos_colliding_walls(sfConvexShape *shape, sfConvexShape **w);
+sfConvexShape **copy_body(sfConvexShape **body);
 
 // File handling
 char *read_file(char *path);

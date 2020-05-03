@@ -1,12 +1,13 @@
 #!/bin/python3
 
-MAP_FILE = "enemy.dat"
+MAP_FILE = "assets/enemy.dat"
 
 colors = {
     "white": [255, 255, 255, 255],
     "red": [255, 0, 0, 255],
     "green": [0, 255, 0, 255],
-    "blue": [0, 0, 255, 255]
+    "blue": [0, 0, 255, 255],
+    "brown": [102, 65, 30, 255]
 }
 
 types = {
@@ -19,19 +20,17 @@ enemies = [
     [
         200, 20, 20, 0,
         [
-            [types["body"], [0, 0], [0, 50], [50, 50], [50, 0], colors["white"]],
-            [types["body"], [0, 0], [0, 40], [40, 40], [40, 0], colors["green"]],
-            [types["body"], [0, 0], [0, 30], [30, 30], [30, 0], colors["blue"]],
-            [types["loot"], 0, 10, 70],
+            [types["body"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
+            [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
+            [types["loot"], 0, 5, 50],
         ]
     ],
     [
         200, 40, 40, 100,
         [
-            [types["body"], [0, 0], [0, 50], [50, 50], colors["red"]],
-            [types["body"], [0, 0], [0, 40], [40, 40], [40, 0], colors["green"]],
-            [types["body"], [0, 0], [0, 30], [30, 30], [30, 0], colors["blue"]],
-            [types["loot"], 1, 5, 100],
+            [types["body"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
+            [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["red"]],
+            [types["loot"], 1, 5, 50],
         ]
     ]
 ]
@@ -39,12 +38,16 @@ enemies = [
 loots = [
     [
         [
-            [types["shape"], [25, 25], [75, 25], [75, 75], [25, 75], colors["green"]],
+            [types["shape"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
+            [types["shape"], [10, 20], [10, 50], [40, 50], [40, 20], colors["red"]],
+            [types["shape"], [20, 0], [20, 10], [30, 10], [30, 0], colors["brown"]],
         ]
     ],
     [
         [
-            [types["shape"], [25, 25], [75, 25], [75, 75], [25, 75], colors["red"]],
+            [types["shape"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
+            [types["shape"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
+            [types["shape"], [20, 0], [20, 10], [30, 10], [30, 0], colors["brown"]],
         ]
     ],
 ]

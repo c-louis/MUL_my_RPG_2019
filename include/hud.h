@@ -19,6 +19,10 @@ typedef struct hud {
     sfConvexShape *l_container;
     float max_life;
     float life;
+    sfConvexShape *armor_bar;
+    sfConvexShape *a_container;
+    float max_armor;
+    float armor;
     sfConvexShape *xp_bar;
     sfConvexShape *x_container;
     float xp_next_level;
@@ -27,5 +31,9 @@ typedef struct hud {
     char *a_level;
     sfText *text_level;
 } hud_t;
+
+// Player life and xp handling
+void update_xp(hud_t *hud, float xp);
+int update_life(hud_t *hud, float change);
 
 #endif

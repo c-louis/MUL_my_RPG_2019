@@ -69,6 +69,10 @@ int move_enemy(entity_t *entity, globals_t *gl)
         if (is_pos_inwall(enemy_position, gl->rooms[gl->room_index]->walls))
             return (1);
     }
+    if (entity->id % 2 != 0)
+        return (move_entity(entity, player_position, 5, gl));
+    if (get_distance(player_position, entity->pos) <= entity->weapon_list[0]->range)
+        return (0);
     move_entity(entity, player_position, 5, gl);
     return (0);
 }
