@@ -19,6 +19,9 @@ syst_t *create_system(void)
     system->desc = desc;
     system->pt_head = 0;
     system->timer = 0;
+    system->tex = sfTexture_create(1, 1);
+    system->sprite = sfSprite_create();
+    sfSprite_setTexture(system->sprite, system->tex, sfTrue);
     return (system);
 }
 

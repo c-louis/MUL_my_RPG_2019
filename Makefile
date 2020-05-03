@@ -48,7 +48,6 @@ SRC	=	src/main.c	\
 		src/particle/anim.c			\
 		src/particle/system.c		\
 		src/particle/part.c			\
-		src/particle/buffer.c		\
 		src/particle/desc/desc.c	\
 		src/particle/desc/move.c	\
 

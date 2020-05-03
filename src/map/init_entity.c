@@ -57,6 +57,7 @@ int init_close_weapon(entity_t *entity)
     weapon->damage = 20 + rand()%10;
     weapon->range = 50 + rand()%10;
     weapon->cooldown = (float) rand()/(float)(RAND_MAX/5);
+    weapon->clock = sfClock_create();
     return (add_weapon_to_entity(entity, weapon));
 }
 

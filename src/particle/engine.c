@@ -7,8 +7,19 @@
 
 #include <stdlib.h>
 
-#include "particle.h"
 #include "my.h"
+#include "rpg.h"
+
+void init_shader(part_t *engine)
+{
+    engine->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
+        "assets/shaders/particle.frag");
+    engine->state = malloc(sizeof(sfRenderStates));
+    engine->state->blendMode = sfBlendAlpha;
+    engine->state->shader = engine->shader;
+    engine->state->transform = sfTransform_Identity;
+    engine->state->texture = NULL;
+}
 
 part_t *create_engine(sfVideoMode mode)
 {
@@ -16,17 +27,26 @@ part_t *create_engine(sfVideoMode mode)
 
     if (!engine)
         return (0);
-    engine->fb = create_framebuffer(mode);
-    engine->fb_tex = sfTexture_create(mode.width, mode.height);
-    engine->res = sfSprite_create();
     engine->systems = malloc(sizeof(syst_t *));
-    if (!engine->systems || !engine->fb || !engine->fb_tex || !engine->res)
+    if (!engine->systems)
         return (0);
     engine->systems[0] = 0;
-    sfTexture_updateFromPixels(engine->fb_tex, engine->fb->pixels,
-        mode.width, mode.height, 0, 0);
-    sfSprite_setTexture(engine->res, engine->fb_tex, sfTrue);
+    init_shader(engine);
     return (engine);
+}
+
+
+void update_engine(part_t *engine, double delta)
+{
+    for (int i = 0; engine->systems[i] != 0; i++){
+        if (engine->systems[i]->desc->duration == -1)
+            continue;
+        engine->systems[i]->desc->duration -= delta;
+        if (engine->systems[i]->desc->duration < 0){
+            remove_system(engine, engine->systems[i]);
+            i = 0;
+        }
+    }
 }
 
 void append_system(part_t *engine, syst_t *system)

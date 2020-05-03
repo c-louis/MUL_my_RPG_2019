@@ -88,12 +88,16 @@ void draw_items(sfRenderWindow *window, globals_t *gl)
 
 void draw_mainview(sfRenderWindow *window, globals_t *gl)
 {
+    sfTime time = sfClock_restart(gl->clock);
+    double delta = (double) sfTime_asMilliseconds(time) / 1000;
+
     sfRenderWindow_setView(window, gl->main_view);
     draw_lights(window, gl);
     draw_walls(window, gl);
     draw_entity(window, gl->player);
     draw_enemies(window, gl);
     draw_items(window, gl);
+    animate_engine(gl->particle, delta, window);
     if (is_on_end(gl)) {
         sfRenderWindow_drawText(window, gl->end_room, 0);
     }
