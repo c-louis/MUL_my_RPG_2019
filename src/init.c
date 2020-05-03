@@ -56,6 +56,7 @@ void init_text_end_room(globals_t *gl)
     sfText_setColor(gl->end_room, sfRed);
     sfText_setString(gl->end_room, "Press E to go to next room !\n");
 }
+
 void init_engine(globals_t *gl)
 {
     gl->bank = get_enemies("assets/enemy.dat");
@@ -121,5 +122,7 @@ void init_globals(globals_t *gl)
     sfView_setSize(gl->hud_view, (sfVector2f) {1920, 1080});
     init_engine(gl);
     init_lights_at_room(gl, 0);
+    gl->hud = init_hud(gl);
+    sfView_setCenter(gl->hud_view, (sfVector2f) {gl->mode.width / 2, gl->mode.height / 2});
     sfView_setCenter(gl->main_view, gl->player->pos);
 }

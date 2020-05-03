@@ -7,7 +7,7 @@
 
 #include "rpg.h"
 
-void draw_hud(sfRenderWindow *window, globals_t *gl)
+void draw_walls(sfRenderWindow *window, globals_t *gl)
 {
     room_t *room = gl->rooms[gl->room_index];
 
@@ -42,6 +42,17 @@ void update_light_position(sfRenderWindow *window, globals_t *gl)
     sfShader_setVec3UniformArray(gl->shader, "u_lights", lights, lc);
 }
 
+void draw_hud(sfRenderWindow *window, globals_t *gl)
+{
+    for (int i = 0; i < SLOT_NB * 2; i++)
+        sfRenderWindow_drawConvexShape(window, gl->hud->inv_slots[i], 0);
+    sfRenderWindow_drawConvexShape(window, gl->hud->l_container, 0);
+    sfRenderWindow_drawConvexShape(window, gl->hud->life_bar, 0);
+    sfRenderWindow_drawConvexShape(window, gl->hud->x_container, 0);
+    sfRenderWindow_drawConvexShape(window, gl->hud->xp_bar, 0);
+    sfRenderWindow_drawText(window, gl->hud->text_level, 0);
+}
+
 void main_loop(sfRenderWindow *window, globals_t *gl)
 {
     sfTime time = sfClock_getElapsedTime(gl->clock);
@@ -53,9 +64,10 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_setView(window, gl->main_view);
     draw_lights(window, gl);
-    draw_hud(window, gl);
+    draw_walls(window, gl);
     draw_entity(window, gl->player);
     sfRenderWindow_setView(window, gl->hud_view);
+    draw_hud(window, gl);
     if (is_on_end(gl)) {
         sfRenderWindow_drawText(window, gl->end_room, 0);
     }

@@ -52,5 +52,5 @@ void clean_rays(sfVector2f *casts, light_t *light, room_t *room)
         (sfVector2f) {1920, 1080}, room);
     sort_casts(casts, pt_size, light->position);
     //for (int i = 0; i < pt_size; i++)
-    //    printf("raycast %d: %f, %f\n", i, casts[i].x, casts[i].y);
+    //printf("raycast %d: %f, %f\n", i, casts[i].x, casts[i].y);
 }
