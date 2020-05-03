@@ -10,7 +10,7 @@
 #include "my.h"
 #include "rpg.h"
 
-void init_shader(part_t *engine)
+void init_shader(part_t *engine, sfVideoMode mode)
 {
     engine->shader = sfShader_createFromFile("assets/shaders/simple.vert", 0,
         "assets/shaders/particle.frag");
@@ -19,6 +19,8 @@ void init_shader(part_t *engine)
     engine->state->shader = engine->shader;
     engine->state->transform = sfTransform_Identity;
     engine->state->texture = NULL;
+    sfShader_setVec2Uniform(engine->shader, "u_resolution",
+        (sfGlslVec2) {mode.width, mode.height});
 }
 
 part_t *create_engine(sfVideoMode mode)
@@ -31,7 +33,7 @@ part_t *create_engine(sfVideoMode mode)
     if (!engine->systems)
         return (0);
     engine->systems[0] = 0;
-    init_shader(engine);
+    init_shader(engine, mode);
     return (engine);
 }
 

@@ -8,7 +8,6 @@ uniform vec3[20] u_lights;
 
 void main()
 {
-    vec2 p = gl_FragCoord.xy / u_resolution;
     float future = 0.0;
     for (int i = 0; i < u_lights_count; i++){
         vec2 l = vec2(u_lights[i].x, u_resolution.y - u_lights[i].y);

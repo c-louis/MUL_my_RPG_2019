@@ -17,21 +17,23 @@ void animate_particle(point_t *particle, double delta)
 }
 
 void draw_point(syst_t *syst, point_t *pt,
-    sfRenderWindow *window, sfRenderStates *state)
+    sfRenderWindow *window, sfRenderStates *state, sfView *view)
 {
     int size = syst->desc->size[0];
     sfColor c = syst->desc->color[0];
+    sfVector2i p = sfRenderWindow_mapCoordsToPixel(window, pt->pos, view);
+    //sfVector2f p = sfRenderWindow_mapPixelToCoords(window, (sfVector2i) {(int)pt->pos.x, (int)pt->pos.y}, view);
 
-    sfSprite_setScale(syst->sprite, (sfVector2f) {size, size});
-    sfSprite_setPosition(syst->sprite, (sfVector2f) {pt->pos.x - size / 2, pt->pos.y - size / 2});
-    sfShader_setVec2Uniform(state->shader, "u_resolution", (sfGlslVec2) {size, size});
+    sfSprite_setScale(syst->sprite, (sfVector2f) {4 * size, 4 * size});
+    sfSprite_setPosition(syst->sprite, (sfVector2f) {pt->pos.x - 2 * size, pt->pos.y - 2 * size});
+    sfShader_setVec2Uniform(state->shader, "u_pos", (sfGlslVec2) {p.x, p.y});
     sfShader_setVec3Uniform(state->shader, "u_color", (sfGlslVec3) {c.r, c.g, c.b});
     sfShader_setIntUniform(state->shader, "u_size", size);
     sfRenderWindow_drawSprite(window, syst->sprite, state);
 }
 
 void animate_system(syst_t *system, double delta,
-    sfRenderWindow *window, sfRenderStates *state)
+    sfRenderWindow *window, sfRenderStates *state, sfView *view)
 {
     descriptor_t *desc = system->desc;
 
@@ -42,7 +44,7 @@ void animate_system(syst_t *system, double delta,
     system->timer -= delta;
     for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         animate_particle(pt, delta);
-        draw_point(system, pt, window, state);
+        draw_point(system, pt, window, state, view);
     }
     for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         if (pt->life > desc->lifetime){
@@ -52,9 +54,9 @@ void animate_system(syst_t *system, double delta,
     }
 }
 
-void animate_engine(part_t *engine, double delta, sfRenderWindow *window)
+void animate_engine(part_t *engine, double delta, sfRenderWindow *window, sfView *view)
 {
     for (int i = 0; engine->systems[i] != 0; i++)
-        animate_system(engine->systems[i], delta, window, engine->state);
+        animate_system(engine->systems[i], delta, window, engine->state, view);
     update_engine(engine, delta);
 }

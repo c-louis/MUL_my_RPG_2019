@@ -51,8 +51,9 @@ int init_player(globals_t *room)
 
 void init_text_end_room(globals_t *gl)
 {
-    gl->end_room = sfText_create();
     sfFont *font = sfFont_createFromFile("assets/font/sweet_purple.ttf");
+
+    gl->end_room = sfText_create();
     sfText_setFont(gl->end_room, font);
     sfText_setColor(gl->end_room, sfRed);
     sfText_setString(gl->end_room, "Press E to go to next room !\n");
@@ -146,4 +147,5 @@ void init_globals(globals_t *gl)
     init_views(gl);
     init_hud(gl);
     gl->particle = create_engine(gl->mode);
+    update_ends(gl);
 }

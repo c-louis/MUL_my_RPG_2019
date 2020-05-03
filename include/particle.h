@@ -87,6 +87,6 @@ void clear_fb(framebuffer_t *fb);
 void update_engine(part_t *engine, double delta);
 framebuffer_t *create_framebuffer(sfVideoMode mode);
 
-void animate_engine(part_t *engine, double delta, sfRenderWindow *window);
+void animate_engine(part_t *engine, double delta, sfRenderWindow *window, sfView *view);
 
 #endif

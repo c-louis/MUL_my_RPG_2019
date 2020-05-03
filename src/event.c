@@ -16,6 +16,7 @@ void handle_event(sfRenderWindow *window, sfEvent *event, globals_t *gl)
         show_swap_room_key(window, gl);
         swap_room_event(event, gl);
         attack_event(window, gl, event);
+        consume_item(gl, event);
     }
     if (event->type == sfEvtMouseMoved)
         mouse_move_event(event, gl->player, gl, window);

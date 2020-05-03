@@ -33,7 +33,7 @@ void do_raycast(sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room)
 void triple_raycast(
     sfVector2f *buf, sfVector2f from, sfVector2f to, room_t *room)
 {
-    float angle = 0.001f;
+    float angle = 0.00001f;
     sfVector2f small_to = {cosf(angle) *
         (to.x - from.x) - sinf(angle) * (to.y - from.y) + from.x,
         sinf(angle) *

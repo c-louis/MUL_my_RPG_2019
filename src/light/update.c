@@ -38,5 +38,6 @@ void update_single(sfConvexShape **poly, room_t *room, light_t *light)
 void update_lights(sfConvexShape ***poly, globals_t *gl)
 {
     for (int i = 0; poly[i] != 0; i++)
-        update_single(poly[i], gl->rooms[0], gl->rooms[0]->lights[i]);
+        update_single(poly[i], gl->rooms[gl->room_index],
+            gl->rooms[gl->room_index]->lights[i]);
 }

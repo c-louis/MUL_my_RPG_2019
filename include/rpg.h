@@ -51,6 +51,8 @@ void main_loop(sfRenderWindow *window, globals_t *gl);
 // init Hud
 void init_hud(globals_t *gl);
 void set_points(sfConvexShape *shape, sfFloatRect rect);
+void update_ends(globals_t *gl);
+void consume_item(globals_t *gl, sfEvent *event);
 
 // light
 int alloc_poly_light(sfConvexShape ***poly, room_t *room, light_t *light);

@@ -97,7 +97,7 @@ void draw_mainview(sfRenderWindow *window, globals_t *gl)
     draw_entity(window, gl->player);
     draw_enemies(window, gl);
     draw_items(window, gl);
-    animate_engine(gl->particle, delta, window);
+    animate_engine(gl->particle, delta, window, gl->main_view);
     if (is_on_end(gl)) {
         sfRenderWindow_drawText(window, gl->end_room, 0);
     }
