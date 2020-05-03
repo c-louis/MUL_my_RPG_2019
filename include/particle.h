@@ -83,7 +83,7 @@ void desc_set_region_square(descriptor_t *desc, sfIntRect rect, char dir);
 
 void set_pixel(framebuffer_t *fb, int x, int y, sfColor color);
 void clear_fb(framebuffer_t *fb);
-void update_engine(part_t *engine);
+void update_engine(part_t *engine, double delta);
 framebuffer_t *create_framebuffer(sfVideoMode mode);
 
 void animate_engine(part_t *engine, double delta);
