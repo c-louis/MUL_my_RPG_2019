@@ -75,6 +75,9 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     float f_time = ((float) i_time) / 100;
 
     update_light_position(window, gl);
+    for (int i = 0; gl->rooms[gl->room_index]->enemies[i]; i++) {
+        move_enemy(gl->rooms[gl->room_index]->enemies[i], gl);
+    }
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_setView(window, gl->main_view);

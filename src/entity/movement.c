@@ -48,3 +48,27 @@ int move_entity(entity_t *entity, sfVector2f to, int speed, globals_t *gl)
     entity->pos = next_position;
     return (0);
 }
+
+int is_pos_inwall(sfVector2f pos, sfConvexShape **walls)
+{
+    for (int i = 0; walls && walls[i]; i++) {
+        if (is_colliding(walls[i], pos))
+            return (1);
+    }
+    return (0);
+}
+
+int move_enemy(entity_t *entity, globals_t *gl)
+{
+    sfVector2f player_position = gl->player->pos;
+    sfVector2f enemy_position = entity->pos;
+    
+    while (!(enemy_position.x == player_position.x &&
+        player_position.y == enemy_position.y)) {
+        enemy_position = get_newposition(enemy_position, player_position, 1);
+        if (is_pos_inwall(enemy_position, gl->rooms[gl->room_index]->walls))
+            return (1);
+    }
+    move_entity(entity, player_position, 5, gl);
+    return (0);
+}
