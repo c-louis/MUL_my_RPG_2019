@@ -45,14 +45,27 @@ void update_light_position(sfRenderWindow *window, globals_t *gl)
 
 void draw_hud(sfRenderWindow *window, globals_t *gl)
 {
+    sfVideoMode mode = gl->mode;
+
     for (int i = 0; i < SLOT_NB * 2; i++)
         sfRenderWindow_drawConvexShape(window, gl->hud->inv_slots[i], 0);
+    for (int i = 0; i < SLOT_NB; i++) {
+        if (!gl->hud->inv_contains[i])
+            continue;
+        for (int y = 0; gl->hud->inv_contains[i]->body[y]; y++) {
+            sfConvexShape_setPosition(gl->hud->inv_contains[i]->body[y], (sfVector2f) {(mode.width - SLOT_NB * (50 + INV_MARGIN))
+            / 2 + (i * (50 + INV_MARGIN)), mode.height - 120});
+            sfRenderWindow_drawConvexShape(window, gl->hud->inv_contains[i]->body[y], 0);
+        }
+    }
     sfRenderWindow_drawConvexShape(window, gl->hud->l_container, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->life_bar, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->x_container, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->xp_bar, 0);
     sfRenderWindow_drawConvexShape(window, gl->hud->armor_bar, 0);
-    sfRenderWindow_drawText(window, gl->hud->text_level, 0);
+    sfRenderWindow_drawText(window, gl->quest, 0);
+    if (!gl->rooms[gl->room_index]->enemies[0])
+        sfRenderWindow_drawText(window, gl->hud->text_level, 0);
 }
 
 void draw_enemies(sfRenderWindow *window, globals_t *gl)
@@ -60,8 +73,6 @@ void draw_enemies(sfRenderWindow *window, globals_t *gl)
     entity_t **enemies = gl->rooms[gl->room_index]->enemies;
 
     for (int i = 0; enemies && enemies[i]; i++) {
-        if (!enemies[i]->state)
-            continue;
         for (int y = 0; enemies[i]->body && enemies[i]->body[y]; y++) {
             sfConvexShape_setPosition(enemies[i]->body[y], enemies[i]->pos);
             sfRenderWindow_drawConvexShape(window, enemies[i]->body[y], 0);
@@ -112,16 +123,6 @@ void draw_hudview(sfRenderWindow *window, globals_t *gl)
     draw_hud(window, gl);
 }
 
-void kill_enemies(globals_t *gl)
-{
-    room_t *room = gl->rooms[gl->room_index];
-
-    for (int i = 0; room->enemies && room->enemies[i]; i++) {
-        room->enemies[i]->stat->health -= 10;
-    }
-    check_enemies_life(gl);
-}
-
 void enemy_attack(globals_t *gl)
 {
     entity_t **enemies = gl->rooms[gl->room_index]->enemies;
@@ -143,7 +144,6 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     update_light_position(window, gl);
     update_enemies_pos(gl);
     enemy_attack(gl);
-    //kill_enemies(gl);
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
     draw_mainview(window, gl);

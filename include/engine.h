@@ -115,5 +115,6 @@ info_t *get_room_end(room_t *room);
 // Bank getter
 int get_enemies_bank_size(e_bank_t *bank);
 int get_loot_bank_size(e_bank_t *bank);
+int add_weapon_to_entity(entity_t *entity, weapon_t *weapon);
 
 #endif

@@ -176,7 +176,7 @@ class Editor():
     
     def add_new_info(self):
         room = self.current_map[self.current_room]
-        room[3].append([types["info"], info_type["START"], [200, 100]])
+        room[3].append([types["info"], info_type["START"], [200, 100], 0])
         self.update_hierarchy()
         self.update_canvas()
         pass
@@ -603,31 +603,25 @@ class Editor():
         Entry(self.inspector, width=10, textvariable=var_state).grid(column=1, row=5)
         pass
     
-    def inspect_obj(self, var, obj):
-        if hasattr(self, 'info_obj_type_show') and self.info_obj_type_show:
-            self.info_obj_type_show = False
-            self.info_obj_label.destroy()
-            self.info_obj_entry.destroy()
-            obj.remove(obj[3])
-        elif var.get() == "OBJ":
+    def inspect_obj(self, obj):
+        if obj[1] == 2:
             self.info_obj_label = Label(self.inspector, text="Object ID")
             self.info_obj_label.grid(column=0, row=4)
             obj_type = IntVar()
-            obj_type.set(0)
-            obj.append(0)
+            obj_type.set(obj[3])
             obj_type.trace("w", lambda *a: self.update_val(obj, 3, obj_type))
             self.info_obj_entry = Entry(self.inspector, width=10, textvariable=obj_type)
             self.info_obj_entry.grid(column=1, row=4)
-            self.info_obj_type_show = True
         pass
 
     def inspect_info(self):
         obj = self.current_map[self.current_room][3][self.selection[0]]
+        print(obj)
         inv_map = {v: k for k, v in info_type.items()}
         Label(self.inspector, text="Info", font='Helvetica 12 bold').grid(column=1, row=0)
         var_type = StringVar()
         var_type.set(inv_map[obj[1]])
-        var_type.trace("w", lambda *a: (self.update_val_arr(obj, 1, var_type, info_type), self.inspect_obj(var_type, obj)))
+        var_type.trace("w", lambda *a: (self.update_val_arr(obj, 1, var_type, info_type), self.inspect_obj(obj)))
         OptionMenu(self.inspector, var_type, *info_type.keys()).grid(column=0, row=1)
         var_x = IntVar()
         var_y = IntVar()
@@ -638,7 +632,7 @@ class Editor():
         Label(self.inspector, text="Position").grid(column=0, row=2)
         Entry(self.inspector, width=10, textvariable=var_x).grid(column=0, row=3)
         Entry(self.inspector, width=10, textvariable=var_y).grid(column=1, row=3)
-        self.inspect_obj(var_type, obj)
+        self.inspect_obj(obj)
         pass
     
     def inspect_room(self):
