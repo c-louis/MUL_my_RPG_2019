@@ -68,6 +68,31 @@ void draw_enemies(sfRenderWindow *window, globals_t *gl)
     }
 }
 
+void update_enemies_pos(globals_t *gl)
+{
+    for (int i = 0; gl->rooms[gl->room_index]->enemies[i]; i++) {
+        move_enemy(gl->rooms[gl->room_index]->enemies[i], gl);
+    }
+}
+
+void draw_mainview(sfRenderWindow *window, globals_t *gl)
+{
+    sfRenderWindow_setView(window, gl->main_view);
+    draw_lights(window, gl);
+    draw_walls(window, gl);
+    draw_entity(window, gl->player);
+    draw_enemies(window, gl);
+    if (is_on_end(gl)) {
+        sfRenderWindow_drawText(window, gl->end_room, 0);
+    }
+}
+
+void draw_hudview(sfRenderWindow *window, globals_t *gl)
+{
+    sfRenderWindow_setView(window, gl->hud_view);
+    draw_hud(window, gl);
+}
+
 void main_loop(sfRenderWindow *window, globals_t *gl)
 {
     sfTime time = sfClock_getElapsedTime(gl->clock);
@@ -75,20 +100,9 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     float f_time = ((float) i_time) / 100;
 
     update_light_position(window, gl);
-    for (int i = 0; gl->rooms[gl->room_index]->enemies[i]; i++) {
-        move_enemy(gl->rooms[gl->room_index]->enemies[i], gl);
-    }
+    update_enemies_pos(gl);
     sfShader_setFloatUniform(gl->shader, "u_time", f_time);
     sfRenderWindow_clear(window, sfBlack);
-    sfRenderWindow_setView(window, gl->main_view);
-    draw_lights(window, gl);
-    draw_walls(window, gl);
-    draw_entity(window, gl->player);
-    draw_enemies(window, gl);
-    sfRenderWindow_setView(window, gl->hud_view);
-    draw_hud(window, gl);
-    if (is_on_end(gl)) {
-        sfRenderWindow_drawText(window, gl->end_room, 0);
-    }
+    draw_mainview(window, gl);
     sfRenderWindow_display(window);
 }

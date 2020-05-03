@@ -62,7 +62,7 @@ int move_enemy(entity_t *entity, globals_t *gl)
 {
     sfVector2f player_position = gl->player->pos;
     sfVector2f enemy_position = entity->pos;
-    
+
     while (!(enemy_position.x == player_position.x &&
         player_position.y == enemy_position.y)) {
         enemy_position = get_newposition(enemy_position, player_position, 1);
