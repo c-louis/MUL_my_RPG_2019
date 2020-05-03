@@ -5,18 +5,45 @@
 ## Makefile
 ##
 
-SRC	=	src/main.c			\
-		src/event.c			\
-		src/loop.c			\
-		src/init.c			\
-		src/clean.c			\
-		src/particle/engine.c		\
-		src/particle/anim.c		\
-		src/particle/system.c		\
-		src/particle/part.c		\
-		src/particle/buffer.c		\
-		src/particle/desc/desc.c	\
-		src/particle/desc/move.c
+SRC	=	src/main.c	\
+		src/event.c	\
+		src/loop.c	\
+		src/init.c	\
+		src/clean.c	\
+		src/file.c 	\
+		src/light/intersect.c	\
+		src/light/init.c		\
+		src/light/raycast.c		\
+		src/light/update.c		\
+		src/light/utils.c		\
+		src/light/clean_ray.c	\
+		src/map/map_read.c		\
+		src/map/light.c			\
+		src/map/room.c			\
+		src/map/wall.c			\
+		src/map/information.c	\
+		src/map/init_entity.c	\
+		src/map/entity.c		\
+		src/enemies/item.c		\
+		src/enemies/enemy.c			\
+		src/enemies/enemy_loot.c	\
+		src/enemies/enemy_body.c	\
+		src/enemies/item_body.c		\
+		src/enemies/static_read.c	\
+		src/player/movement.c		\
+		src/player/rotation.c		\
+		src/player/end_room.c		\
+		src/player/attack.c			\
+		src/entity/draw.c			\
+		src/entity/math_utils.c		\
+		src/entity/movement.c		\
+		src/entity/copy.c			\
+		src/rooms/getter.c			\
+		src/rooms/debugger.c		\
+		src/bank/getter.c			\
+		src/bank/debugger.c			\
+		src/hud/init.c				\
+		src/hud/utils.c				\
 
 OBJ	=	$(SRC:.c=.o)
 

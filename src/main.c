@@ -25,6 +25,7 @@ int check_loading(globals_t *gl)
 
 int main(int ac, char **av)
 {
+    srand(((unsigned int) ac + (unsigned int) av));
     sfRenderWindow *window;
     sfEvent event;
     globals_t gl;
