@@ -18,7 +18,7 @@ types = {
 #def enemies : body -> point -> color | loot [id][quantity][prob[0,100]] | 100*100px max x50y50 max
 enemies = [
     [
-        200, 20, 20, 0,
+        100, 20, 20, 100,
         [
             [types["body"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
             [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
@@ -26,10 +26,18 @@ enemies = [
         ]
     ],
     [
-        200, 40, 40, 100,
+        100, 20, 20, 100,
         [
             [types["body"], [0, 10], [0, 60], [50, 60], [50, 10], colors["white"]],
             [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["red"]],
+            [types["loot"], 1, 5, 50],
+        ]
+    ],
+    [
+        250, 40, 40, 100,
+        [
+            [types["body"], [0, 10], [0, 80], [70, 80], [70, 10], colors["brown"]],
+            [types["body"], [10, 20], [10, 50], [40, 50], [40, 20], colors["green"]],
             [types["loot"], 1, 5, 50],
         ]
     ]
