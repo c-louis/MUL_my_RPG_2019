@@ -16,30 +16,22 @@ void animate_particle(point_t *particle, double delta)
     particle->life += delta;
 }
 
-void draw_point(framebuffer_t *fb, point_t *pt, descriptor_t *desc)
+void draw_point(syst_t *syst, point_t *pt,
+    sfRenderWindow *window, sfRenderStates *state)
 {
-    sfColor color = desc->color[0];
-    int size = desc->size[0];
-    double ratio = 0;
-    double dx = 0;
-    double dy = 0;
+    int size = syst->desc->size[0];
+    sfColor c = syst->desc->color[0];
 
-    if (!pt || !fb)
-        return;
-    for (double i = pt->pos.x - size / 2; i < pt->pos.x + size / 2; i++){
-        for (double j = pt->pos.y - size / 2; j < pt->pos.y + size / 2; j++){
-            dx = i - (double) pt->pos.x;
-            dy = j - (double) pt->pos.y;
-            ratio = (size - 2 * sqrt(dx * dx + dy * dy)) / size;
-            if (ratio <= 0.0f)
-                continue;
-            color.a = 255 * ratio;
-            set_pixel(fb, pt->pos.x + i, pt->pos.y + j, color);
-        }
-    }
+    sfSprite_setScale(syst->sprite, (sfVector2f) {size, size});
+    sfSprite_setPosition(syst->sprite, (sfVector2f) {pt->pos.x - size / 2, pt->pos.y - size / 2});
+    sfShader_setVec2Uniform(state->shader, "u_resolution", (sfGlslVec2) {size, size});
+    sfShader_setVec3Uniform(state->shader, "u_color", (sfGlslVec3) {c.r, c.g, c.b});
+    sfShader_setIntUniform(state->shader, "u_size", size);
+    sfRenderWindow_drawSprite(window, syst->sprite, state);
 }
 
-void animate_system(framebuffer_t *fb, syst_t *system, double delta)
+void animate_system(syst_t *system, double delta,
+    sfRenderWindow *window, sfRenderStates *state)
 {
     descriptor_t *desc = system->desc;
 
@@ -50,7 +42,7 @@ void animate_system(framebuffer_t *fb, syst_t *system, double delta)
     system->timer -= delta;
     for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         animate_particle(pt, delta);
-        draw_point(fb, pt, desc);
+        draw_point(system, pt, window, state);
     }
     for (point_t *pt = system->pt_head; pt != 0; pt = pt->next){
         if (pt->life > desc->lifetime){
@@ -60,10 +52,9 @@ void animate_system(framebuffer_t *fb, syst_t *system, double delta)
     }
 }
 
-void animate_engine(part_t *engine, double delta)
+void animate_engine(part_t *engine, double delta, sfRenderWindow *window)
 {
-    clear_fb(engine->fb);
     for (int i = 0; engine->systems[i] != 0; i++)
-        animate_system(engine->fb, engine->systems[i], delta);
+        animate_system(engine->systems[i], delta, window, engine->state);
     update_engine(engine, delta);
 }

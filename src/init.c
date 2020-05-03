@@ -145,4 +145,5 @@ void init_globals(globals_t *gl)
     init_lights_at_room(gl, 0);
     init_views(gl);
     init_hud(gl);
+    gl->particle = create_engine(gl->mode);
 }

@@ -17,6 +17,7 @@
 
 #include "engine.h"
 #include "hud.h"
+#include "particle.h"
 
 typedef struct gl {
     sfVideoMode mode;
@@ -33,6 +34,7 @@ typedef struct gl {
     sfText *end_room;
     int room_index;
     hud_t *hud;
+    part_t *particle;
 } globals_t;
 
 typedef struct file {

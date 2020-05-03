@@ -55,12 +55,13 @@ typedef struct sys {
     descriptor_t *desc;
     point_t *pt_head;
     double timer;
+    sfTexture *tex;
+    sfSprite *sprite;
 } syst_t;
 
 typedef struct par {
-    framebuffer_t *fb;
-    sfTexture *fb_tex;
-    sfSprite *res;
+    sfRenderStates *state;
+    sfShader *shader;
     syst_t **systems;
 } part_t;
 
@@ -86,6 +87,6 @@ void clear_fb(framebuffer_t *fb);
 void update_engine(part_t *engine, double delta);
 framebuffer_t *create_framebuffer(sfVideoMode mode);
 
-void animate_engine(part_t *engine, double delta);
+void animate_engine(part_t *engine, double delta, sfRenderWindow *window);
 
 #endif
