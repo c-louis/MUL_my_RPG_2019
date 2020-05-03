@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 int set_new_entity_loot(loot_table_t *loot, dfile_t *data, int *i)
 {

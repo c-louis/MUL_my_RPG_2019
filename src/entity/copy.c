@@ -64,11 +64,16 @@ entity_stat_t *copy_stat(entity_stat_t *stat)
 
 entity_t *copy_entity(entity_t *entity)
 {
-    entity_t *copy = malloc(sizeof(entity_t));
+    entity_t *copy;
 
+    if (!entity)
+        return (0);
+    copy = malloc(sizeof(entity_t));
     if (!copy)
         return (0);
     copy->body = copy_body(entity->body);
     copy->loot_table = copy_loottable(entity->loot_table);
     copy->stat = copy_stat(entity->stat);
+    copy->id = entity->id;
+    return (copy);
 }

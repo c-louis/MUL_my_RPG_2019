@@ -11,13 +11,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 int data_switch_body(dfile_t *data, int *i, e_bank_t *bank, int index[2])
 {
     switch (data->data[*i]) {
         case 'B':
-            i += add_body_to_en(data, bank->enemies_bank[index[0]], i, 0);
+            *i += add_body_to_en(data, bank->enemies_bank[index[0]], i, 0);
             break;
         case 'S':
             *i += add_body_to_item(data, bank->loot[index[1]], i, 0);
@@ -36,7 +36,7 @@ int data_switch_el(dfile_t *data, int *i, e_bank_t *bank)
             data_switch_body(data, i, bank, index);
             break;
         case 'L':
-            i += add_loot(bank->enemies_bank[index[0]], data, i);
+            *i += add_loot(bank->enemies_bank[index[0]], data, i);
             break;
         case 'O':
             *i += add_item(bank, &index[1], data, i);
@@ -50,11 +50,23 @@ int data_switch_el(dfile_t *data, int *i, e_bank_t *bank)
     return (0);
 }
 
+e_bank_t *init_bank(void)
+{
+    e_bank_t *bank = malloc(sizeof(e_bank_t));
+
+    if (!bank)
+        return (0);
+    bank->enemies_bank = NULL;
+    bank->loot = NULL;
+    bank->npc_bank = NULL;
+    return (bank);
+}
+
 e_bank_t *get_enemies(char *path)
 {
     dfile_t *data = malloc(sizeof(dfile_t));
     char *data_t = read_file(path);
-    e_bank_t *bank = malloc(sizeof(e_bank_t));
+    e_bank_t *bank = init_bank();
     int data_size = get_filesize(path);
     int i = 0;
 

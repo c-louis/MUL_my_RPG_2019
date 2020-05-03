@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 sfConvexShape *init_new_wall(short *points, int pc)
 {
@@ -22,7 +22,7 @@ sfConvexShape *init_new_wall(short *points, int pc)
         point = (sfVector2f) {(float) points[p_i++], (float) points[p_i++]};
         sfConvexShape_setPoint(shape, i, point);
     }
-    sfConvexShape_setFillColor(shape, sfWhite);
+    sfConvexShape_setFillColor(shape, sfBlack);
     return (shape);
 }
 

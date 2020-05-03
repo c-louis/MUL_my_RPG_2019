@@ -7,9 +7,9 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
-int set_newentity_data(entity_t *enemy, dfile_t *data, int *i)
+int set_newentity_data(entity_t *enemy, dfile_t *data, int *i, int *size)
 {
     entity_stat_t *en_stat = malloc(sizeof(entity_stat_t));
 
@@ -20,6 +20,9 @@ int set_newentity_data(entity_t *enemy, dfile_t *data, int *i)
     en_stat->rotationspeed = (float) data->data[*i + 4];
     en_stat->armor = (float) data->data[*i + 5];
     enemy->stat = en_stat;
+    enemy->body = NULL;
+    enemy->loot_table = NULL;
+    enemy->id = *size;
     return (0);
 }
 
@@ -38,10 +41,11 @@ int add_enemy_static(e_bank_t *bank, int *size, dfile_t *data, int *i)
         free(new);
         return (-(data->data_size));
     }
-    if (set_newentity_data(new[*size], data, i))
+    if (set_newentity_data(new[*size], data, i, size))
         return (-(data->data_size));
     *size += 1;
     bank->enemies_bank = new;
-    free(old);
+    if (old)
+        free(old);
     return (6);
 }

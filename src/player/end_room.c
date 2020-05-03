@@ -35,9 +35,8 @@ void show_swap_room_key(sfRenderWindow *window, globals_t *gl)
     if (!is_on_end(gl))
         return;
     if (!end_point) {
-        printf("No endpoint in the room !\n");
+        my_printf("No endpoint in the room !\n");
         return;
     }
-    printf("setting pos !\n");
     sfText_setPosition(gl->end_room, end_point->pos);
 }

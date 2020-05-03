@@ -169,7 +169,7 @@ class Editor():
     
     def add_new_entity(self):
         room = self.current_map[self.current_room]
-        room[3].append([types["entity"], entity_type["NPC"], [200, 100]])
+        room[3].append([types["entity"], entity_type["NPC"], [200, 100], 0, 0])
         self.update_hierarchy()
         self.update_canvas()
         pass
@@ -591,6 +591,16 @@ class Editor():
         Label(self.inspector, text="Position").grid(column=0, row=2)
         Entry(self.inspector, width=10, textvariable=var_x).grid(column=0, row=3)
         Entry(self.inspector, width=10, textvariable=var_y).grid(column=1, row=3)
+        var_id = IntVar()
+        var_state = IntVar()
+        var_id.set(obj[3])
+        var_state.set(obj[4])
+        var_id.trace("w", lambda *a: (self.update_val(obj, 3, var_id), self.update_canvas()))
+        var_state.trace("w", lambda *a: (self.update_val(obj, 4, var_state), self.update_canvas()))
+        Label(self.inspector, text="ID").grid(column=0, row=4)
+        Entry(self.inspector, width=10, textvariable=var_id).grid(column=1, row=4)
+        Label(self.inspector, text="State").grid(column=0, row=5)
+        Entry(self.inspector, width=10, textvariable=var_state).grid(column=1, row=5)
         pass
     
     def inspect_obj(self, var, obj):
@@ -730,6 +740,8 @@ class Export():
         res.append(data[1])
         self.append_short(res, data[2][0])
         self.append_short(res, data[2][1])
+        res.append(data[3])
+        res.append(data[4])
         pass
 
     def write_object_to_file(self, fil, obj):

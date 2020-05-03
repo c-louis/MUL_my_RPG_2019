@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 info_t *init_new_info(sfVector2f pos, char type, char id)
 {

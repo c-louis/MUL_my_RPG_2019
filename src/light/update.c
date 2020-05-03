@@ -27,7 +27,7 @@ void update_single(sfConvexShape **poly, room_t *room, light_t *light)
     int points = get_point_counts(room);
 
     for (int i = 0; i < points - 1; i++){
-        printf("update: %d, ray[i].x = %f, ray[i].y = %f\n", i, raycasts[i].x, raycasts[i].y);
+        //printf("update: %d, ray[i].x = %f, ray[i].y = %f\n", i, raycasts[i].x, raycasts[i].y);
         set_poly_to(&(poly[i]), light, raycasts[i], raycasts[i + 1]);
     }
     set_poly_to(&poly[points - 1], light, raycasts[0], raycasts[points - 1]);

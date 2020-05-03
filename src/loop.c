@@ -26,11 +26,12 @@ void draw_lights(sfRenderWindow *window, globals_t *gl)
 
 void update_light_position(sfRenderWindow *window, globals_t *gl)
 {
+    room_t *room = gl->rooms[gl->room_index];
     sfGlslVec3 *lights = gl->light_shader_obj;
     int lc = 0;
     sfVector2i new_pos;
 
-    while (gl->rooms[gl->room_index]->lights[lc] != 0)
+    while (room->lights && room->lights[lc] != 0)
         lc++;
     for (int i = 0; i < lc; i++) {
         new_pos = 
@@ -56,7 +57,6 @@ void main_loop(sfRenderWindow *window, globals_t *gl)
     draw_entity(window, gl->player);
     sfRenderWindow_setView(window, gl->hud_view);
     if (is_on_end(gl)) {
-        printf("Drawing text !\n");
         sfRenderWindow_drawText(window, gl->end_room, 0);
     }
     sfRenderWindow_display(window);

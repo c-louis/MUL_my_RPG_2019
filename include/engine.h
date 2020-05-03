@@ -53,6 +53,8 @@ typedef struct information {
 } info_t;
 
 typedef struct entity {
+    int id;
+    int state;
     sfConvexShape **body;
     sfVector2f pos;
     entity_stat_t *stat;
@@ -76,30 +78,11 @@ typedef struct s_room {
     sfTexture *tex;
 } room_t;
 
-typedef struct file {
-    unsigned char *data;
-    int data_size;
-} dfile_t;
-
 typedef struct entity_bank {
     entity_t **enemies_bank;
     entity_t **npc_bank;
     loot_t **loot;
 } e_bank_t;
-
-int add_wall(dfile_t *a_data, room_t *room, int *i);
-int add_room(room_t ***rooms, int *size, dfile_t *data, int *i);
-int add_light(dfile_t *a_data, room_t *room, int *i);
-room_t **get_rooms(char *path);
-
-// Handling
-int add_info(dfile_t *a_data, room_t *room, int *i);
-int add_entity(dfile_t *a_data, room_t *room, int *i);
-int add_body_to_en(dfile_t *a_data, entity_t *entity, int *i, int j);
-int add_loot(entity_t *entity, dfile_t *data, int *i);
-int add_item(e_bank_t *bank, int *item_size, dfile_t *data, int *i);
-int add_body_to_item(dfile_t *a_data, loot_t *item, int *i, int j);
-int add_enemy_static(e_bank_t *bank, int *size, dfile_t *data, int *i);
 
 // Math utils
 float get_angle(sfVector2f player, sfVector2f mouse);
@@ -110,7 +93,8 @@ int are_shape_colliding(sfConvexShape *shape1, sfConvexShape *shape2);
 // entity drawing
 int draw_entity(sfRenderWindow *window, entity_t *entity);
 
-// Entity movement
+// Entity
+entity_t *copy_entity(entity_t *entity);
 int is_newpos_colliding_walls(sfConvexShape *shape, sfConvexShape **w);
 
 // File handling
@@ -120,5 +104,9 @@ int get_filesize(char *path);
 // Room Getter
 info_t *get_room_start(room_t *room);
 info_t *get_room_end(room_t *room);
+
+// Bank getter
+int get_enemies_bank_size(e_bank_t *bank);
+int get_loot_bank_size(e_bank_t *bank);
 
 #endif

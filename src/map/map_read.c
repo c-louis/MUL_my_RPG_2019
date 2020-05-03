@@ -11,16 +11,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "engine.h"
-
-int add_entity(dfile_t *a_data, room_t *room, int *i)
-{
-
-}
+#include "rpg.h"
 
 int data_wall_light(dfile_t *data, int *i, room_t ***rooms, int *index_room)
 {
-    printf("index_room : %d\n", *index_room - 1);
     if (data->data[*i] == 'W')
         *i += add_wall(data, (*rooms)[*index_room - 1], i);
     else
@@ -61,20 +55,20 @@ int data_switch(dfile_t *data, int *i, room_t ***rooms, int *index_room)
     return (0);
 }
 
-room_t **get_rooms(char *path)
+room_t **get_rooms(char *path, globals_t *gl)
 {
     dfile_t *data = malloc(sizeof(dfile_t));
     char *data_t = read_file(path);
     room_t **rooms = NULL;
-    int data_size = get_filesize(path);
     int room_index = 0;
     int i = 0;
 
-    if (!data || data_size == -1 || !data_t || data_t[0] != 'R')
+    if (!data || !data_t || data_t[0] != 'R')
         return (0);
     data->data = data_t;
-    data->data_size = data_size;
-    while (i < data_size && i >= 0) {
+    data->gl = gl;
+    data->data_size = get_filesize(path);
+    while (i < get_filesize(path) && i >= 0) {
         if (data_switch(data, &i, &rooms, &room_index)) {
             return (0);
         }

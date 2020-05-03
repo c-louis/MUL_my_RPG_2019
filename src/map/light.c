@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 light_t *init_new_light(sfVector2f pos, short radius, char status)
 {

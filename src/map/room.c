@@ -7,7 +7,16 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
+
+void set_newrooms_null(room_t *room)
+{
+    room->walls = NULL;
+    room->lights = NULL;
+    room->info = NULL;
+    room->enemies = NULL;
+    room->npc = NULL;
+}
 
 void set_newrooms_data(room_t *room, dfile_t *data, int *i)
 {
@@ -27,10 +36,8 @@ void set_newrooms_data(room_t *room, dfile_t *data, int *i)
     rgb[3] = data->data[*i + 9];
     room->size = (sfVector2i) {(int) width, (int) height};
     room->color = sfColor_fromRGBA(rgb[0], rgb[1], rgb[2], rgb[3]);
-    room->walls = NULL;
-    room->lights = NULL;
     room->tex = sfTexture_create(room->size.x, room->size.y);
-    room->info = NULL;
+    set_newrooms_null(room);
 }
 
 int add_room(room_t ***rooms, int *size, dfile_t *data, int *i)
@@ -49,7 +56,6 @@ int add_room(room_t ***rooms, int *size, dfile_t *data, int *i)
         return (1);
     }
     set_newrooms_data(new_rooms[*size], data, i);
-    printf("Just init room : %d\n", *size);
     *size += 1;
     free(old_rooms);
     *rooms = new_rooms;

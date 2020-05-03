@@ -34,7 +34,7 @@ sfConvexShape ***alloc_polygones(room_t *room)
         l_size++;
     if (!(res = malloc(sizeof(sfConvexShape **) * (l_size + 1))))
         return (0);
-    printf("l_size: %d\n", l_size);
+    //printf("l_size: %d\n", l_size);
     res[l_size] = 0;
     for (int i = 0; i < l_size; i++)
         if (alloc_poly_light(&res[i], room, room->lights[i]))

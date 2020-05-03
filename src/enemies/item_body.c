@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "engine.h"
+#include "rpg.h"
 
 sfConvexShape *init_new_body(short *points, char point_count, char color_d[4])
 {

@@ -26,7 +26,7 @@ enemies = [
         ]
     ],
     [
-        400, 40, 40, 100,
+        200, 40, 40, 100,
         [
             [types["body"], [0, 0], [0, 50], [50, 50], colors["red"]],
             [types["body"], [0, 0], [0, 40], [40, 40], [40, 0], colors["green"]],
@@ -48,6 +48,11 @@ loots = [
         ]
     ],
 ]
+
+def write_map(data):
+        f = open(MAP_FILE, 'wb')
+        f.write(bytes(data))
+        f.close()
 
 def append_short(res, data):
     if data > 65536:
@@ -93,16 +98,17 @@ def main():
     for i, enemy in enumerate(enemies):
         res.append(ord('E'))
         res.append(i)
-        append_short(res, enemy[0])
-        append_short(res, enemy[1])
-        append_short(res, enemy[2])
-        append_short(res, enemy[3])
+        res.append(enemy[0])
+        res.append(enemy[1])
+        res.append(enemy[2])
+        res.append(enemy[3])
         for item in enemy[4]:
             item_type = item[0]
             if item_type not in write_type:
                 print("Incorrect item : unknown type %c ?" % item_type)
             res.append(ord(item_type))
             write_type[item_type](res, item)
+    write_map(res)
 
 if __name__ == "__main__":
     main()

@@ -51,14 +51,17 @@ int init_player(globals_t *room)
 void init_text_end_room(globals_t *gl)
 {
     gl->end_room = sfText_create();
-    sfFont *font = sfFont_createFromFile("asset/font/sweet_purple.ttf");
+    sfFont *font = sfFont_createFromFile("assets/font/sweet_purple.ttf");
     sfText_setFont(gl->end_room, font);
     sfText_setColor(gl->end_room, sfRed);
     sfText_setString(gl->end_room, "Press E to go to next room !\n");
 }
 void init_engine(globals_t *gl)
 {
-    gl->rooms = get_rooms("assets/map.dat");
+    gl->bank = get_enemies("assets/enemy.dat");
+    if (!gl->bank)
+        my_printf("Error in the Enemies / loot library can't play with this set !\n");
+    gl->rooms = get_rooms("assets/map.dat", gl);
     if (!gl->rooms) {
         my_printf("Error in the Map you can't play with this map !\n");
         exit(84);
